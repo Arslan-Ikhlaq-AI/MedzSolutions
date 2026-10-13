@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\AffiliateApplicationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CareerController;
@@ -51,4 +52,28 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', fn () => view('welcome', ['mode' => 'dashboard']))->name('dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::redirect('/admin', '/admin-panel');
+
+Route::prefix('admin-panel')->name('admin.')->group(function () {
+    Route::get('login', [Admin\AuthController::class, 'create'])->name('login');
+    Route::post('login', [Admin\AuthController::class, 'store'])->middleware('throttle:5,1')->name('login.store');
+
+    Route::middleware('admin')->group(function () {
+        Route::post('logout', [Admin\AuthController::class, 'destroy'])->name('logout');
+        Route::get('/', Admin\DashboardController::class)->name('dashboard');
+        Route::post('notifications/read-all', [Admin\NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+
+        Route::resource('contact-messages', Admin\ContactMessageController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::resource('consultations', Admin\ConsultationRequestController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::get('job-applications/{id}/resume', [Admin\JobApplicationController::class, 'resume'])->name('job-applications.resume');
+        Route::resource('job-applications', Admin\JobApplicationController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::resource('affiliates', Admin\AffiliateApplicationController::class)->only(['index', 'show', 'update', 'destroy']);
+
+        Route::resource('posts', Admin\PostController::class)->except('show');
+
+        Route::get('account', [Admin\AccountController::class, 'edit'])->name('account.edit');
+        Route::put('account', [Admin\AccountController::class, 'update'])->name('account.update');
+    });
 });

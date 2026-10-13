@@ -2,11 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\Models\Post;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class SitePagesTest extends TestCase
 {
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -52,7 +56,6 @@ class SitePagesTest extends TestCase
             'services' => '/services/',
             'resources' => '/resources/',
             'jobs' => '/careers/',
-            'posts' => '/blogs/',
         ])->flatMap(fn (string $prefix, string $key) => collect(config("site.{$key}"))->map(fn (array $entry): string => $prefix.$entry['slug']));
 
         foreach ($detailUris as $uri) {
@@ -137,13 +140,32 @@ class SitePagesTest extends TestCase
             && $props['faqs']->count() === 5);
     }
 
+    public function test_published_post_has_a_detail_page(): void
+    {
+        $post = Post::factory()->create(['title' => 'Understanding Denials']);
+
+        $response = $this->get("/blogs/{$post->slug}");
+
+        $response->assertOk();
+        $response->assertViewHas('page', 'posts.show');
+        $response->assertViewHas('title', 'Understanding Denials');
+    }
+
+    public function test_draft_and_scheduled_posts_are_not_public(): void
+    {
+        $draft = Post::factory()->draft()->create();
+        $scheduled = Post::factory()->scheduled()->create();
+
+        $this->get("/blogs/{$draft->slug}")->assertNotFound();
+        $this->get("/blogs/{$scheduled->slug}")->assertNotFound();
+        $this->get('/blogs')->assertOk()->assertViewHas('props', fn (array $props): bool => $props['posts']->isEmpty());
+    }
+
     public function test_blog_lists_the_newest_posts_first(): void
     {
-        config()->set('site.posts', [
-            $this->postEntry('oldest', '2026-01-10'),
-            $this->postEntry('newest', '2026-06-01'),
-            $this->postEntry('middle', '2026-03-15'),
-        ]);
+        Post::factory()->create(['slug' => 'oldest', 'published_at' => '2026-01-10']);
+        Post::factory()->create(['slug' => 'newest', 'published_at' => '2026-06-01']);
+        Post::factory()->create(['slug' => 'middle', 'published_at' => '2026-03-15']);
 
         $response = $this->get('/blogs');
 
@@ -153,11 +175,9 @@ class SitePagesTest extends TestCase
 
     public function test_blog_search_returns_posts_whose_title_or_excerpt_matches(): void
     {
-        config()->set('site.posts', [
-            $this->postEntry('fixing-denials', '2026-05-01', title: 'Fixing Claim Denials'),
-            $this->postEntry('credentialing', '2026-04-01', excerpt: 'Avoid DENIAL delays with early enrollment.'),
-            $this->postEntry('coding-tips', '2026-03-01', title: 'Coding Tips'),
-        ]);
+        Post::factory()->create(['slug' => 'fixing-denials', 'title' => 'Fixing Claim Denials', 'category' => 'General', 'published_at' => '2026-05-01']);
+        Post::factory()->create(['slug' => 'credentialing', 'excerpt' => 'Avoid DENIAL delays with early enrollment.', 'category' => 'General', 'published_at' => '2026-04-01']);
+        Post::factory()->create(['slug' => 'coding-tips', 'title' => 'Coding Tips', 'excerpt' => 'Habits that help.', 'category' => 'General', 'published_at' => '2026-03-01']);
 
         $response = $this->get('/blogs?search=denial');
 
@@ -168,11 +188,10 @@ class SitePagesTest extends TestCase
 
     public function test_blog_category_filter_returns_only_posts_in_that_category(): void
     {
-        config()->set('site.posts', [
-            $this->postEntry('denials-one', '2026-05-01', category: 'Denials'),
-            $this->postEntry('coding-one', '2026-04-01', category: 'Coding'),
-            $this->postEntry('denials-two', '2026-03-01', category: 'Denials'),
-        ]);
+        Post::factory()->create(['slug' => 'denials-one', 'category' => 'Denials', 'published_at' => '2026-05-01']);
+        Post::factory()->create(['slug' => 'coding-one', 'category' => 'Coding', 'published_at' => '2026-04-01']);
+        Post::factory()->create(['slug' => 'denials-two', 'category' => 'Denials', 'published_at' => '2026-03-01']);
+        Post::factory()->draft()->create(['category' => 'Coding']);
 
         $response = $this->get('/blogs?category=Denials');
 
@@ -181,17 +200,21 @@ class SitePagesTest extends TestCase
             && $props['categories'] === [['name' => 'Coding', 'count' => 1], ['name' => 'Denials', 'count' => 2]]);
     }
 
-    public function test_post_page_shows_a_formatted_date_and_reading_time(): void
+    public function test_post_page_shows_a_formatted_date_reading_time_and_rendered_markdown(): void
     {
-        config()->set('site.posts', [
-            $this->postEntry('long-read', '2026-03-05', body: str_repeat('word ', 450)),
+        Post::factory()->create([
+            'slug' => 'long-read',
+            'published_at' => '2026-03-05',
+            'body' => "## Key point\n\n".str_repeat('word ', 450).'<script>alert(1)</script>',
         ]);
 
         $response = $this->get('/blogs/long-read');
 
         $response->assertOk();
         $response->assertViewHas('props', fn (array $props): bool => $props['post']['date'] === 'March 5, 2026'
-            && $props['post']['reading_time'] === '3 min read');
+            && $props['post']['reading_time'] === '3 min read'
+            && str_contains($props['post']['body'], '<h2>Key point</h2>')
+            && ! str_contains($props['post']['body'], '<script>'));
     }
 
     public function test_careers_search_returns_only_matching_positions(): void
@@ -275,18 +298,6 @@ class SitePagesTest extends TestCase
             'title' => $title,
             'excerpt' => $excerpt,
             'body' => $body,
-        ];
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    private function postEntry(string $slug, string $publishedAt, ?string $title = null, string $excerpt = 'Short summary.', string $category = 'General', string $body = 'Body copy.'): array
-    {
-        return [
-            ...$this->entry($slug, $title ?? ucfirst($slug), $body, $excerpt),
-            'category' => $category,
-            'published_at' => $publishedAt,
         ];
     }
 

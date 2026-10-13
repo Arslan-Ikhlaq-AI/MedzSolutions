@@ -2,8 +2,9 @@
 
 namespace App\Support;
 
+use App\Models\Post;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -63,18 +64,25 @@ class SiteContent
     }
 
     /**
-     * Blog posts, newest first, optionally narrowed by search term and category.
+     * Published blog posts, newest first, optionally narrowed by search term and category.
      *
      * @return Collection<int, array<string, mixed>>
      */
     public function posts(?string $search = null, ?string $category = null): Collection
     {
-        $posts = $this->summaries('posts', 'posts.show')
-            ->when($category, fn (Collection $posts): Collection => $posts->where('category', $category))
-            ->sortByDesc('published_at')
-            ->values();
+        return Post::query()
+            ->published()
+            ->when($category, fn (Builder $query) => $query->where('category', $category))
+            ->when(filled($search), fn (Builder $query) => $query->where(function (Builder $query) use ($search): void {
+                $term = '%'.addcslashes((string) $search, '%_\\').'%';
 
-        return $this->search($posts, $search, ['title', 'excerpt', 'category']);
+                $query->where('title', 'like', $term)
+                    ->orWhere('excerpt', 'like', $term)
+                    ->orWhere('category', 'like', $term);
+            }))
+            ->latest('published_at')
+            ->get()
+            ->map(fn (Post $post): array => Arr::except($this->postEntry($post), ['body']));
     }
 
     /**
@@ -82,22 +90,52 @@ class SiteContent
      */
     public function post(string $slug): array
     {
-        return $this->find('posts', 'posts.show', $slug);
+        $post = Post::query()->published()->where('slug', $slug)->first() ?? abort(404);
+
+        return [
+            ...$this->postEntry($post),
+            'body' => Str::markdown($post->body, [
+                'html_input' => 'strip',
+                'allow_unsafe_links' => false,
+            ]),
+        ];
     }
 
     /**
-     * Blog categories with the number of posts in each, alphabetically.
+     * Blog categories of published posts with the number of posts in each, alphabetically.
      *
      * @return array<int, array{name: string, count: int}>
      */
     public function postCategories(): array
     {
-        return collect(config('site.posts'))
-            ->countBy('category')
-            ->sortKeys()
-            ->map(fn (int $count, string $name): array => ['name' => $name, 'count' => $count])
-            ->values()
+        return Post::query()
+            ->published()
+            ->selectRaw('category, count(*) as total')
+            ->groupBy('category')
+            ->orderBy('category')
+            ->get()
+            ->map(fn (Post $post): array => ['name' => $post->category, 'count' => (int) $post->total])
             ->all();
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function postEntry(Post $post): array
+    {
+        return [
+            'slug' => $post->slug,
+            'title' => $post->title,
+            'category' => $post->category,
+            'excerpt' => $post->excerpt,
+            'body' => $post->body,
+            'image' => $post->featuredImageUrl(),
+            'artwork' => $post->artwork,
+            'published_at' => $post->published_at->toDateString(),
+            'date' => $post->published_at->format('F j, Y'),
+            'reading_time' => max(1, (int) ceil(str_word_count($post->body) / 200)).' min read',
+            'url' => route('posts.show', $post->slug),
+        ];
     }
 
     /**
@@ -151,11 +189,6 @@ class SiteContent
     {
         return collect(config("site.{$key}"))->map(function (array $entry) use ($routeName): array {
             $entry['url'] = route($routeName, $entry['slug']);
-
-            if (isset($entry['published_at'])) {
-                $entry['date'] = Carbon::parse($entry['published_at'])->format('F j, Y');
-                $entry['reading_time'] = max(1, (int) ceil(str_word_count($entry['body']) / 200)).' min read';
-            }
 
             return $entry;
         });

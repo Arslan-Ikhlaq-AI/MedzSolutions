@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasInboxStatus;
 use Database\Factories\ConsultationRequestFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 class ConsultationRequest extends Model
 {
     /** @use HasFactory<ConsultationRequestFactory> */
-    use HasFactory;
+    use HasFactory, HasInboxStatus;
 
     /**
      * Get the attributes that should be cast.
