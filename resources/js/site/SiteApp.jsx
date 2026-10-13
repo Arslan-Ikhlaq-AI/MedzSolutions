@@ -6,6 +6,7 @@ import CareerShow from './pages/CareerShow.jsx';
 import Careers from './pages/Careers.jsx';
 import Compliance from './pages/Compliance.jsx';
 import Contact from './pages/Contact.jsx';
+import CookiePolicy from './pages/CookiePolicy.jsx';
 import Faqs from './pages/Faqs.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
@@ -27,6 +28,7 @@ const pages = {
     software: Software,
     compliance: Compliance,
     faqs: Faqs,
+    'cookie-policy': CookiePolicy,
     contact: Contact,
     affiliate: Affiliate,
     'services.index': ServicesIndex,

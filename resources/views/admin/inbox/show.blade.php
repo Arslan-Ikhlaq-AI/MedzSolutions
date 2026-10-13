@@ -15,6 +15,7 @@
     </div>
 
     <div class="detail-grid">
+        <div class="detail-main">
         <section class="card">
             <dl class="details">
                 @foreach ($details as $detail)
@@ -51,6 +52,40 @@
             </dl>
         </section>
 
+        <section class="card">
+            <div class="card-head">
+                <h3>Visitor journey</h3>
+                @if ($journey)
+                    <span class="muted">{{ $journey['page_count'] }} {{ \Illuminate\Support\Str::plural('page', $journey['page_count']) }} over {{ $journey['visit_days'] }} {{ \Illuminate\Support\Str::plural('day', $journey['visit_days']) }}</span>
+                @endif
+            </div>
+            @if ($journey)
+                <dl class="journey-facts">
+                    <div><dt>First visit</dt><dd>{{ $journey['first_seen']->format('M j, Y g:i A') }}</dd></div>
+                    <div><dt>Came from</dt><dd>{{ $journey['source'] }}</dd></div>
+                    <div><dt>Before contacting us</dt><dd>{{ $journey['first_seen']->diffForHumans($record->created_at, ['syntax' => \Carbon\CarbonInterface::DIFF_ABSOLUTE]) }}</dd></div>
+                </dl>
+                <ol class="timeline">
+                    @foreach ($journey['pages'] as $page)
+                        <li>
+                            <time datetime="{{ $page->created_at->toIso8601String() }}">{{ $page->created_at->format('M j, g:i A') }}</time>
+                            <span class="timeline-page">
+                                <strong>{{ $page->title ?: $page->path }}</strong>
+                                <a href="{{ url($page->path) }}" target="_blank" rel="noopener">{{ $page->path }}</a>
+                            </span>
+                        </li>
+                    @endforeach
+                    <li class="timeline-end">
+                        <time datetime="{{ $record->created_at->toIso8601String() }}">{{ $record->created_at->format('M j, g:i A') }}</time>
+                        <span class="timeline-page"><strong>Sent this {{ strtolower($section['singular']) }}</strong></span>
+                    </li>
+                </ol>
+            @else
+                <p class="muted">No visit history for this enquiry. The visitor did not allow analytics cookies, so we only know what they wrote in the form.</p>
+            @endif
+        </section>
+        </div>
+
         <aside class="detail-side">
             <form class="card" method="post" action="{{ route($route.'.update', $record->getKey()) }}">
                 @csrf
@@ -71,6 +106,11 @@
                     @error('admin_notes')<span class="field-error">{{ $message }}</span>@enderror
                 </label>
                 <button type="submit" class="btn btn-primary btn-block">Save changes</button>
+                @if ($record->follow_up_sent_at)
+                    <p class="muted small-print form-note">Follow-up email sent {{ $record->follow_up_sent_at->format('M j, Y') }}.</p>
+                @elseif (in_array($sectionKey, ['contact-messages', 'consultations'], true) && $record->status->value === 'new')
+                    <p class="muted small-print form-note">If this stays "New", a follow-up email goes out {{ config('site.emails.follow_up_after_days') }} days after it arrived.</p>
+                @endif
             </form>
 
             @if ($extraActions)

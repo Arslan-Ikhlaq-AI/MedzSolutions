@@ -32,6 +32,11 @@ return [
             ['days' => 'Monday – Friday', 'time' => '9:00 AM – 6:00 PM (ET)'],
             ['days' => 'Saturday – Sunday', 'time' => 'Closed'],
         ],
+        // International format without "+" or leading zeros: 03460766863 becomes 923460766863.
+        'whatsapp' => [
+            'number' => '923460766863',
+            'message' => 'Hello Medz-Solutions, I would like to know more about your medical billing services.',
+        ],
         'map' => [
             'query' => 'United States',
             'zoom' => 3,
@@ -62,6 +67,70 @@ return [
     | stocksnap.io/photo/female-nurse-XYNYITNTU1, stocksnap.io/photo/analytics-charts-RCFX768X06,
     | stocksnap.io/photo/health-care-8P49QWX4US and stocksnap.io/photo/health-care-Z7PBRN5VXJ
     */
+    /*
+    | Cookie consent. Bump "version" whenever the policy or the cookies change so every visitor
+    | is asked again. Cookies tied to an "integration" are only listed (and the category only
+    | marked as in use) when that tool is configured in config/services.php. Names ending in "*"
+    | match every cookie starting with that prefix; they are deleted when consent is withdrawn.
+    */
+    'cookies' => [
+        'version' => '1',
+        'days' => 180,
+        'intro' => 'We use cookies to keep this website working and, with your permission, to understand how it is used and improve it. You can accept everything, reject everything that is not essential, or choose exactly what you are comfortable with. You can change your mind at any time.',
+        'categories' => [
+            [
+                'id' => 'necessary',
+                'title' => 'Strictly necessary',
+                'required' => true,
+                'description' => 'These keep the website secure and let forms work. They do not track you and cannot be switched off.',
+                'cookies' => [
+                    ['name' => '{session}', 'provider' => 'Medz-Solutions', 'purpose' => 'Keeps your visit secure and remembers confirmation messages after you submit a form.', 'duration' => 'Session'],
+                    ['name' => 'XSRF-TOKEN', 'provider' => 'Medz-Solutions', 'purpose' => 'Protects our forms from forged requests.', 'duration' => 'Session'],
+                    ['name' => 'medz_consent', 'provider' => 'Medz-Solutions', 'purpose' => 'Remembers the cookie choices you make here and your consent ID.', 'duration' => '6 months'],
+                ],
+            ],
+            [
+                'id' => 'analytics',
+                'title' => 'Analytics',
+                'required' => false,
+                'description' => 'Help us understand which pages are useful and where visitors get stuck, so we can improve the website. Reports are aggregated and never identify you by name.',
+                'cookies' => [
+                    ['name' => 'Visit history', 'provider' => 'Medz-Solutions', 'purpose' => 'Records the pages you open here, linked only to your random consent ID. If you later contact us through a form, it is attached to your enquiry so our team knows what you were interested in. Deleted when you withdraw consent.', 'duration' => '12 months'],
+                    ['name' => '_ga', 'provider' => 'Google Analytics', 'purpose' => 'Tells visits apart so we can count visitors without knowing who they are.', 'duration' => '2 years', 'integration' => 'google_analytics'],
+                    ['name' => '_ga_*', 'provider' => 'Google Analytics', 'purpose' => 'Keeps track of the current visit for our statistics.', 'duration' => '2 years', 'integration' => 'google_analytics'],
+                ],
+            ],
+            [
+                'id' => 'marketing',
+                'title' => 'Marketing',
+                'required' => false,
+                'description' => 'Measure whether our advertising works and show you relevant information about our services on other websites.',
+                'cookies' => [
+                    ['name' => '_fbp', 'provider' => 'Meta', 'purpose' => 'Measures visits that come from our Facebook and Instagram advertising.', 'duration' => '3 months', 'integration' => 'meta_pixel'],
+                ],
+            ],
+            [
+                'id' => 'preferences',
+                'title' => 'Preferences',
+                'required' => false,
+                'description' => 'Remember choices such as language or display settings, so the website works the way you like on your next visit.',
+                'cookies' => [],
+            ],
+        ],
+    ],
+
+    'cookie_policy_page' => [
+        'updated' => 'October 2026',
+        'intro' => 'This policy explains what cookies are, which ones Medz-Solutions uses and how you can control them.',
+        'what_title' => 'What are cookies?',
+        'what_text' => 'Cookies are small text files that a website stores in your browser. Some are essential for a site to work; others help the site owner understand how it is used. We only set cookies that are not strictly necessary after you have agreed.',
+        'control_title' => 'Your choices',
+        'control_text' => 'You can change or withdraw your consent at any time with the settings at the top of this page or the "Cookie settings" link in the footer of every page. When you withdraw consent we delete the cookies of that category straight away. You can also delete cookies in your browser settings, although parts of the site may then stop working as expected.',
+        'journey_text' => 'If you allow analytics and later send us a form, we link the pages you viewed to your enquiry so we can answer more helpfully. We only ever email people who have contacted us first, and every email we send about your enquiry comes from our team.',
+        'signal_text' => 'We honour the Global Privacy Control (GPC) signal. If your browser sends it, marketing cookies stay off unless you switch them on yourself.',
+        'contact_text' => 'If you have questions about this policy, contact us at',
+    ],
+
     'home' => [
         'slides' => [
             [
@@ -814,6 +883,43 @@ MD,
     /*
     | Messages shown after each form is submitted, keyed by form.
     */
+    /*
+    | Emails sent when someone submits a form. "notify" receives an alert for every new enquiry.
+    | Messages are sent from MAIL_FROM_ADDRESS, and replies go to "reply_to".
+    | Follow-ups go to contact and demo/review enquiries still marked "New" after "follow_up_after_days".
+    */
+    'emails' => [
+        'notify' => env('LEADS_NOTIFICATION_EMAIL', env('MAIL_FROM_ADDRESS')),
+        'reply_to' => env('LEADS_REPLY_TO', env('MAIL_FROM_ADDRESS')),
+        'follow_up_after_days' => 2,
+        'confirmations' => [
+            'contact' => [
+                'subject' => 'We received your message',
+                'body' => 'Thank you for contacting Medz-Solutions. A billing specialist has your message and will reply within one working day.',
+            ],
+            'meeting' => [
+                'subject' => 'Your meeting request is confirmed',
+                'body' => 'Thank you for requesting a meeting with Medz-Solutions. We will contact you shortly to confirm a time that suits you.',
+            ],
+            'review' => [
+                'subject' => 'Your free practice review is on its way',
+                'body' => 'Thank you for requesting a free practice review. A billing specialist is looking at your answers and will contact you within one working day with practical next steps.',
+            ],
+            'application' => [
+                'subject' => 'We received your application',
+                'body' => 'Thank you for applying to Medz-Solutions. Our hiring team reviews every application and will reply within five working days.',
+            ],
+            'affiliate' => [
+                'subject' => 'Thanks for applying to our affiliate program',
+                'body' => 'Thank you for your interest in partnering with Medz-Solutions. We review every application and will contact you within a few working days.',
+            ],
+        ],
+        'follow_up' => [
+            'subject' => 'Following up on your request',
+            'body' => 'We wanted to make sure your request did not slip through the cracks. If it is easier, simply reply to this email with a good time to talk, or book a call using the button below.',
+        ],
+    ],
+
     'form_messages' => [
         'contact' => 'Thank you! Your message has been sent. We will be in touch within one working day.',
         'meeting' => 'Thank you! Your meeting request has been received. We will contact you shortly to confirm a time.',

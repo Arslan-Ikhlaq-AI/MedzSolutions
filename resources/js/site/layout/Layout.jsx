@@ -1,6 +1,7 @@
 import Footer from './Footer.jsx';
 import Header from './Header.jsx';
 import { usePreloader, useScrollAnimations } from './hooks.js';
+import CookieConsent from '../components/CookieConsent.jsx';
 import FloatingContact from './FloatingContact.jsx';
 import MagicCursor from './MagicCursor.jsx';
 
@@ -16,6 +17,7 @@ export default function Layout({ children }) {
             <main id="main">{children}</main>
             <Footer />
             <FloatingContact />
+            <CookieConsent />
         </>
     );
 }

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * A lead from the home page: either a meeting request or a free practice review.
  */
-#[Fillable(['type', 'name', 'email', 'phone', 'practice_name', 'specialty', 'preferred_date', 'challenges'])]
+#[Fillable(['visitor_id', 'type', 'name', 'email', 'phone', 'practice_name', 'specialty', 'preferred_date', 'challenges'])]
 class ConsultationRequest extends Model
 {
     /** @use HasFactory<ConsultationRequestFactory> */

@@ -52,6 +52,8 @@ export default function Footer() {
                     <p>Copyright © {year} <strong>{company.name}</strong>. All rights reserved.</p>
                     <ul>
                         <li><a href={routes.compliance}>Compliance</a></li>
+                        <li><a href={routes.cookiePolicy}>Cookie Policy</a></li>
+                        <li><button type="button" className="footer-button" onClick={() => window.dispatchEvent(new Event('open-cookie-settings'))}>Cookie settings</button></li>
                         <li><a href={routes.contact}>Contact</a></li>
                         <li className="is-strong"><a href="#top" onClick={scrollToTop}>Go to top</a></li>
                     </ul>

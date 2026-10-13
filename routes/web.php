@@ -6,8 +6,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\ConsultationRequestController;
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\CookieConsentController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PageVisitController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ServiceController;
@@ -20,6 +22,9 @@ Route::get('/specialities', [PageController::class, 'specialities'])->name('spec
 Route::get('/software', [PageController::class, 'software'])->name('software');
 Route::get('/compliance', [PageController::class, 'compliance'])->name('compliance');
 Route::get('/faqs', [PageController::class, 'faqs'])->name('faqs');
+Route::get('/cookie-policy', [PageController::class, 'cookiePolicy'])->name('cookie-policy');
+Route::post('/cookie-consent', [CookieConsentController::class, 'store'])->middleware('throttle:20,1,cookie-consent')->name('cookie-consent.store');
+Route::post('/visits', [PageVisitController::class, 'store'])->middleware('throttle:60,1,visits')->name('visits.store');
 
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
 Route::get('/services/{slug}', [ServiceController::class, 'show'])->name('services.show');
@@ -58,7 +63,7 @@ Route::redirect('/admin', '/admin-panel');
 
 Route::prefix('admin-panel')->name('admin.')->group(function () {
     Route::get('login', [Admin\AuthController::class, 'create'])->name('login');
-    Route::post('login', [Admin\AuthController::class, 'store'])->middleware('throttle:5,1')->name('login.store');
+    Route::post('login', [Admin\AuthController::class, 'store'])->middleware('throttle:5,1,admin-login')->name('login.store');
 
     Route::middleware('admin')->group(function () {
         Route::post('logout', [Admin\AuthController::class, 'destroy'])->name('logout');
@@ -72,6 +77,8 @@ Route::prefix('admin-panel')->name('admin.')->group(function () {
         Route::resource('affiliates', Admin\AffiliateApplicationController::class)->only(['index', 'show', 'update', 'destroy']);
 
         Route::resource('posts', Admin\PostController::class)->except('show');
+        Route::get('cookie-consents', [Admin\CookieConsentController::class, 'index'])->name('cookie-consents.index');
+        Route::get('cookie-consents/export', [Admin\CookieConsentController::class, 'export'])->name('cookie-consents.export');
 
         Route::get('account', [Admin\AccountController::class, 'edit'])->name('account.edit');
         Route::put('account', [Admin\AccountController::class, 'update'])->name('account.update');

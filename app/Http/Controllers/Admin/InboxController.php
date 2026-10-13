@@ -6,6 +6,7 @@ use App\Enums\RequestStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateInboxItemRequest;
 use App\Support\AdminInbox;
+use App\Support\VisitorJourney;
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -107,7 +108,7 @@ abstract class InboxController extends Controller
         ]);
     }
 
-    public function show(string $id): View
+    public function show(string $id, VisitorJourney $journeys): View
     {
         $record = $this->find($id);
         $record->markAsRead();
@@ -120,6 +121,7 @@ abstract class InboxController extends Controller
             'details' => $this->details($record),
             'statusOptions' => RequestStatus::options(),
             'extraActions' => $this->extraActions($record),
+            'journey' => $journeys->before($record->visitor_id, $record->created_at),
         ]);
     }
 

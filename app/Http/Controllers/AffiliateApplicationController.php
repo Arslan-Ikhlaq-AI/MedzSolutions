@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreAffiliateApplicationRequest;
 use App\Models\AffiliateApplication;
+use App\Support\LeadMailer;
+use App\Support\VisitorConsent;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -24,9 +26,14 @@ class AffiliateApplicationController extends Controller
         ]);
     }
 
-    public function store(StoreAffiliateApplicationRequest $request): RedirectResponse
+    public function store(StoreAffiliateApplicationRequest $request, LeadMailer $mailer): RedirectResponse
     {
-        AffiliateApplication::create($request->validated());
+        $application = AffiliateApplication::create([
+            ...$request->validated(),
+            'visitor_id' => VisitorConsent::fromRequest($request)->trackableId(),
+        ]);
+
+        $mailer->submitted($application, 'affiliate');
 
         return back()
             ->with('status', config('site.form_messages.affiliate'))

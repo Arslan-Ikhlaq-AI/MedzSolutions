@@ -15,6 +15,7 @@ trait HasInboxStatus
         $this->mergeCasts([
             'status' => RequestStatus::class,
             'read_at' => 'datetime',
+            'follow_up_sent_at' => 'datetime',
         ]);
     }
 

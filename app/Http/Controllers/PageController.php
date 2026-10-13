@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\CookieCatalog;
 use App\Support\SiteContent;
 use Illuminate\View\View;
 
@@ -99,6 +100,20 @@ class PageController extends Controller
             'description' => 'How Medz-Solutions protects patient information and keeps billing work aligned with HIPAA and coding guidelines.',
             'props' => [
                 'content' => config('site.compliance_page'),
+            ],
+        ]);
+    }
+
+    public function cookiePolicy(CookieCatalog $cookies): View
+    {
+        return view('site', [
+            'page' => 'cookie-policy',
+            'title' => 'Cookie Policy',
+            'description' => 'Which cookies Medz-Solutions uses, why we use them and how you can change your choices at any time.',
+            'props' => [
+                'content' => config('site.cookie_policy_page'),
+                'categories' => $cookies->categories(),
+                'version' => (string) config('site.cookies.version'),
             ],
         ]);
     }

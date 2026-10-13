@@ -4,13 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreConsultationRequest;
 use App\Models\ConsultationRequest;
+use App\Support\LeadMailer;
+use App\Support\VisitorConsent;
 use Illuminate\Http\RedirectResponse;
 
 class ConsultationRequestController extends Controller
 {
-    public function store(StoreConsultationRequest $request): RedirectResponse
+    public function store(StoreConsultationRequest $request, LeadMailer $mailer): RedirectResponse
     {
-        $consultation = ConsultationRequest::create($request->validated());
+        $consultation = ConsultationRequest::create([
+            ...$request->validated(),
+            'visitor_id' => VisitorConsent::fromRequest($request)->trackableId(),
+        ]);
+
+        $mailer->submitted($consultation, $consultation->type);
 
         return back()
             ->with('status', config("site.form_messages.{$consultation->type}"))

@@ -32,6 +32,18 @@ return [
         'embed_key' => env('GOOGLE_MAPS_EMBED_KEY'),
     ],
 
+    /*
+    | Optional tracking tools. They load only for visitors who allow the matching cookie
+    | category, and their cookies are listed in the Cookie Policy automatically once set.
+    */
+    'google_analytics' => [
+        'measurement_id' => env('GOOGLE_ANALYTICS_ID'),
+    ],
+
+    'meta_pixel' => [
+        'id' => env('META_PIXEL_ID'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

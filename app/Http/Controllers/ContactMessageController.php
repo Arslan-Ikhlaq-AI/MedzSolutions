@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContactMessageRequest;
 use App\Models\ContactMessage;
+use App\Support\LeadMailer;
+use App\Support\VisitorConsent;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -23,9 +25,14 @@ class ContactMessageController extends Controller
         ]);
     }
 
-    public function store(StoreContactMessageRequest $request): RedirectResponse
+    public function store(StoreContactMessageRequest $request, LeadMailer $mailer): RedirectResponse
     {
-        ContactMessage::create($request->validated());
+        $message = ContactMessage::create([
+            ...$request->validated(),
+            'visitor_id' => VisitorConsent::fromRequest($request)->trackableId(),
+        ]);
+
+        $mailer->submitted($message, 'contact');
 
         return back()
             ->with('status', config('site.form_messages.contact'))

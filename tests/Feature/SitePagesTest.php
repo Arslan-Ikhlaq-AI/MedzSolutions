@@ -272,6 +272,16 @@ class SitePagesTest extends TestCase
         $response->assertViewHas('shared', fn (array $shared): bool => $shared['company']['map']['embed'] === 'https://www.google.com/maps/embed/v1/place?key=test-key&q=Austin%2C+TX&zoom=12');
     }
 
+    public function test_every_page_shares_a_whatsapp_link_to_the_company_number(): void
+    {
+        config()->set('site.company.whatsapp', ['number' => '923460766863', 'message' => 'Hello & welcome']);
+
+        $response = $this->get('/about-us');
+
+        $response->assertOk();
+        $response->assertViewHas('shared', fn (array $shared): bool => $shared['company']['whatsapp_url'] === 'https://wa.me/923460766863?text=Hello%20%26%20welcome');
+    }
+
     public function test_every_page_shares_the_service_navigation(): void
     {
         config()->set('site.services', [

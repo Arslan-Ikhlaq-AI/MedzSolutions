@@ -38,6 +38,11 @@
                         <x-admin.icon name="file" /> Blog posts
                     </a>
 
+                    <p class="nav-heading">Privacy</p>
+                    <a @class(['nav-link', 'is-active' => request()->routeIs('admin.cookie-consents.*')]) href="{{ route('admin.cookie-consents.index') }}">
+                        <x-admin.icon name="shield" /> Cookie consents
+                    </a>
+
                     <p class="nav-heading">Account</p>
                     <a @class(['nav-link', 'is-active' => request()->routeIs('admin.account.*')]) href="{{ route('admin.account.edit') }}">
                         <x-admin.icon name="key" /> Change password

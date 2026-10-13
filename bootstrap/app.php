@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Support\VisitorConsent;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,6 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
+        ]);
+
+        // Written by the cookie banner in the browser, so it cannot be encrypted by Laravel.
+        $middleware->encryptCookies(except: [
+            VisitorConsent::COOKIE,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

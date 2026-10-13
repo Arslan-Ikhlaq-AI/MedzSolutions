@@ -32,6 +32,7 @@ class AdminAccessTest extends TestCase
             'affiliates' => ['/admin-panel/affiliates'],
             'blog posts' => ['/admin-panel/posts'],
             'new post' => ['/admin-panel/posts/create'],
+            'cookie consents' => ['/admin-panel/cookie-consents'],
             'account' => ['/admin-panel/account'],
         ];
     }

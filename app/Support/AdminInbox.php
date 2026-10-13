@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 /**
  * The four kinds of request visitors can send from the website, and the numbers the admin panel
@@ -18,6 +19,22 @@ use Illuminate\Support\Str;
  */
 class AdminInbox
 {
+    /**
+     * The inbox section a submitted record belongs to, with its key.
+     *
+     * @return array<string, mixed>
+     */
+    public function sectionFor(Model $record): array
+    {
+        foreach ($this->sections() as $key => $section) {
+            if ($record instanceof $section['model']) {
+                return [...$section, 'key' => $key];
+            }
+        }
+
+        throw new InvalidArgumentException('No inbox section for '.$record::class);
+    }
+
     /**
      * @return array<string, array{model: class-string<Model>, title: string, singular: string, icon: string, route: string, headline: Closure(Model): string, summary: Closure(Model): string}>
      */

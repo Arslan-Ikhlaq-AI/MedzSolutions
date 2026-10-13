@@ -2,6 +2,7 @@
 
 namespace App\View\Composers;
 
+use App\Support\CookieCatalog;
 use App\Support\SiteContent;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
@@ -11,12 +12,16 @@ use Illuminate\View\View;
  */
 class SiteComposer
 {
-    public function __construct(private SiteContent $content) {}
+    public function __construct(private SiteContent $content, private CookieCatalog $cookies) {}
 
     public function compose(View $view): void
     {
         $view->with('shared', [
-            'company' => [...config('site.company'), 'map' => $this->mapLinks()],
+            'company' => [
+                ...config('site.company'),
+                'map' => $this->mapLinks(),
+                'whatsapp_url' => $this->whatsappUrl(),
+            ],
             'brand' => [
                 'mark' => asset('images/brand/logo-mark-128.png'),
             ],
@@ -36,13 +41,28 @@ class SiteComposer
                 'careers' => route('careers.index'),
                 'affiliate' => route('affiliate'),
                 'faqs' => route('faqs'),
+                'cookiePolicy' => route('cookie-policy'),
                 'contact' => route('contact'),
                 'contactStore' => route('contact.store'),
                 'consultations' => route('consultations.store'),
             ],
+            'cookies' => $this->cookies->settings(),
             'currentUrl' => url()->current(),
             'year' => now()->year,
         ]);
+
+        $view->with('trackingIntegrations', $this->cookies->integrations());
+        $view->with('consentVersion', (string) config('site.cookies.version'));
+    }
+
+    /**
+     * Link that opens a WhatsApp chat with the company number and a ready-made first message.
+     */
+    private function whatsappUrl(): string
+    {
+        $whatsapp = config('site.company.whatsapp');
+
+        return 'https://wa.me/'.preg_replace('/\D/', '', $whatsapp['number']).'?text='.rawurlencode($whatsapp['message']);
     }
 
     /**
