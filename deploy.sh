@@ -27,7 +27,7 @@ cd "$APP_DIR"
 step "Selecting PHP 8.3+"
 PHP_BIN="${PHP_BIN:-}"
 if [[ -z "$PHP_BIN" ]]; then
-    for candidate in /opt/alt/php84/usr/bin/php /opt/alt/php83/usr/bin/php "$(command -v php || true)"; do
+    for candidate in /opt/alt/php83/usr/bin/php /opt/alt/php84/usr/bin/php "$(command -v php || true)"; do
         if [[ -n "$candidate" && -x "$candidate" ]] \
             && "$candidate" -r 'exit(version_compare(PHP_VERSION, "8.3.0", ">=") ? 0 : 1);'; then
             PHP_BIN="$candidate"
@@ -54,12 +54,18 @@ if [[ -z "$COMPOSER_BIN" ]]; then
     COMPOSER_BIN="$HOME/bin/composer.phar"
 fi
 
+# alt-php CLIs on CloudLinux can ship with phar disabled; Composer needs it.
+PHP_PHAR_ARGS=()
+if ! "$PHP_BIN" -m | grep -qi '^phar$'; then
+    PHP_PHAR_ARGS=(-d extension=phar.so)
+fi
+
 composer() {
     # /opt/cpanel/composer/bin/composer is a shell wrapper; phars must run through our PHP.
     if head -c 2 "$COMPOSER_BIN" | grep -q '#!' && ! head -n 1 "$COMPOSER_BIN" | grep -q php; then
         "$COMPOSER_BIN" "$@"
     else
-        "$PHP_BIN" "$COMPOSER_BIN" "$@"
+        "$PHP_BIN" "${PHP_PHAR_ARGS[@]}" "$COMPOSER_BIN" "$@"
     fi
 }
 artisan() { "$PHP_BIN" "$APP_DIR/artisan" "$@"; }
