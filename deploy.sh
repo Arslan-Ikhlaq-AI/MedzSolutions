@@ -65,7 +65,7 @@ composer() {
     if head -c 2 "$COMPOSER_BIN" | grep -q '#!' && ! head -n 1 "$COMPOSER_BIN" | grep -q php; then
         "$COMPOSER_BIN" "$@"
     else
-        "$PHP_BIN" "${PHP_PHAR_ARGS[@]}" "$COMPOSER_BIN" "$@"
+        "$PHP_BIN" ${PHP_PHAR_ARGS[@]+"${PHP_PHAR_ARGS[@]}"} "$COMPOSER_BIN" "$@"
     fi
 }
 artisan() { "$PHP_BIN" "$APP_DIR/artisan" "$@"; }
