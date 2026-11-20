@@ -56,7 +56,7 @@ export default function Team({ content, headerImage, members }) {
                     <SectionHeading title={content.departments_title} text={content.departments_text} />
                     <div className="why-tiles is-three">
                         {content.departments.map((department, index) => (
-                            <article className={`why-tile ${index % 2 ? 'is-gold' : 'is-navy'}`} key={department.title} data-animate="fade-up" style={{ '--delay': `${(index % 3) * 0.08}s` }}>
+                            <article className={`why-tile ${index % 2 ? 'is-accent' : 'is-brand'}`} key={department.title} data-animate="fade-up" style={{ '--delay': `${(index % 3) * 0.08}s` }}>
                                 <Icon name={department.icon} />
                                 <h3>{department.title}</h3>
                                 <p>{department.text}</p>

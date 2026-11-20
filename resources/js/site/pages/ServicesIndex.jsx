@@ -2,10 +2,12 @@ import Button from '../components/Button.jsx';
 import ContactLinks from '../components/ContactLinks.jsx';
 import CtaBanner from '../components/CtaBanner.jsx';
 import FaqAccordion from '../components/FaqAccordion.jsx';
+import FeatureList from '../components/FeatureList.jsx';
+import Icon from '../components/Icon.jsx';
+import Media from '../components/Media.jsx';
 import OnboardingSteps from '../components/OnboardingSteps.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 import SectionHeading from '../components/SectionHeading.jsx';
-import ServiceCard from '../components/ServiceCard.jsx';
 import StatGrid from '../components/StatGrid.jsx';
 import WhyBand from '../components/WhyBand.jsx';
 import { useSite } from '../context.js';
@@ -21,11 +23,20 @@ export default function ServicesIndex({ content, headerImage, services, onboardi
             <section className="section services-catalog">
                 <div className="container">
                     <SectionHeading title={content.title} text={content.text} />
-                    <div className="card-grid three">
-                        {services.map((service, index) => (
-                            <ServiceCard key={service.slug} service={service} number={index + 1} delay={(index % 3) * 0.08} />
-                        ))}
-                    </div>
+                    {services.map((service, index) => (
+                        <article className={`core-service-row${index % 2 ? ' is-reversed' : ''}`} id={service.slug} key={service.slug}>
+                            <Media item={service} ratio="4 / 3" reveal className="core-service-row-media" />
+                            <div className="core-service-row-body" data-animate="fade-up">
+                                <span className="core-services-icon"><Icon name={service.icon} /></span>
+                                <span className="service-group-label">{content.group_label} {String(index + 1).padStart(2, '0')}</span>
+                                <h3><a href={service.url}>{service.title}</a></h3>
+                                <p>{service.excerpt}</p>
+                                <h4>{content.list_title}</h4>
+                                <FeatureList features={service.features} />
+                                <Button href={service.url}>{content.more}</Button>
+                            </div>
+                        </article>
+                    ))}
                 </div>
             </section>
 

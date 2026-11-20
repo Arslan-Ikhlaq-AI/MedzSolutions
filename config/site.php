@@ -24,7 +24,7 @@ return [
     'company' => [
         'name' => 'Medz-Solutions',
         'tagline' => 'A streamlined medical billing company',
-        'summary' => 'Medz-Solutions handles medical billing, coding and revenue cycle management for healthcare practices across the USA, so providers can focus on patients while we make sure they are paid accurately and on time.',
+        'summary' => 'Medz-Solutions provides provider credentialing and enrollment, medical billing and revenue cycle management, and medical coding for healthcare practices across the USA, so providers can focus on patients while we make sure they are paid accurately and on time.',
         'email' => 'info@medzsolutions.com',
         'phone' => '+971 55 8531 034',
         'address' => 'Remote-first team serving practices across the USA',
@@ -144,17 +144,17 @@ return [
                 'image' => 'images/photos/hero-doctors-clinic.jpg',
                 'eyebrow' => 'Medical Billing & Revenue Cycle Management',
                 'title' => 'Get Paid Faster for the Care *You Provide*',
-                'body' => 'At **Medz-Solutions**, our billing team takes charge entry, claims, payment posting and follow-up off your desk, so clean claims go out quickly and the revenue you have earned actually reaches your account.',
+                'body' => 'At **Medz-Solutions**, our billing team takes eligibility checks, claims, payment posting, AR follow-up and denials off your desk, so clean claims go out quickly and the revenue you have earned actually reaches your account.',
             ],
             [
                 'image' => 'images/photos/hero-doctors-duo.jpg',
-                'eyebrow' => 'Revenue Cycle Management',
-                'title' => 'Fewer Denials, Steadier Cash Flow, *Clearer Numbers*',
-                'body' => 'We check every claim before it leaves, chase every unpaid balance and send you reports written in plain English, so you always know where your money is and what is holding it up.',
+                'eyebrow' => 'Medical Coding',
+                'title' => 'Accurate Codes, Fewer Denials, *Full Reimbursement*',
+                'body' => 'Our certified coders assign precise ICD-10-CM, CPT and HCPCS codes and modifiers for every encounter, so claims are compliant, fully supported and paid the first time.',
             ],
             [
                 'image' => 'images/photos/hero-doctors-laptop.jpg',
-                'eyebrow' => 'Credentialing & Enrollment',
+                'eyebrow' => 'Provider Credentialing & Enrollment',
                 'title' => 'Start Seeing Insured Patients *Sooner*',
                 'body' => 'From CAQH profiles to payer applications and revalidations, **Medz-Solutions** manages the paperwork and the follow-up calls, so your providers can join networks without months of back-and-forth.',
             ],
@@ -237,8 +237,11 @@ return [
         ],
         'services' => [
             'eyebrow' => 'Our Services',
-            'title' => 'Our Revenue Cycle Services',
-            'text' => 'Support for every stage of the revenue cycle, available as a complete service or one piece at a time.',
+            'title' => 'Our Core Services',
+            'text' => 'Three core services that cover every stage of the revenue cycle, available as a complete package or one piece at a time.',
+            'tab_label' => 'Core Service',
+            'list_title' => 'What is included',
+            'more' => 'Learn More',
             'cta' => 'View All Services',
         ],
         'specialities' => [
@@ -375,7 +378,7 @@ return [
             ['icon' => 'code', 'title' => 'Coding & Audit', 'text' => 'Certified coders assign accurate codes, review documentation and run regular internal audits.'],
             ['icon' => 'refresh', 'title' => 'AR & Denials', 'text' => 'Specialists who chase unpaid claims, correct and appeal denials and track down underpayments.'],
             ['icon' => 'badge', 'title' => 'Credentialing & Enrollment', 'text' => 'The team that enrolls providers with payers, maintains CAQH profiles and tracks every revalidation date.'],
-            ['icon' => 'chat', 'title' => 'Patient Support', 'text' => 'Friendly billing representatives who answer patient questions and help set up payment plans.'],
+            ['icon' => 'clipboard', 'title' => 'Eligibility & Authorizations', 'text' => 'Specialists who verify coverage and benefits before each visit and obtain prior authorizations, so care is approved before it is given.'],
         ],
         'join_title' => 'Want to Join the *Team*?',
         'join_text' => 'We are always interested in hearing from skilled billers, coders and healthcare administrators.',
@@ -389,8 +392,11 @@ return [
         'header_image' => 'images/photos/hero-doctors-clinic.jpg',
         'header_title' => 'Our Services',
         'primary_cta' => 'Get a Free Practice Review',
-        'title' => 'Medical Billing Services for *Every Kind of Practice*',
-        'text' => 'Choose the support your practice needs today. Every service is delivered by specialists, inside your existing systems, with one account manager accountable for results.',
+        'title' => 'Our Core Services for *Every Kind of Practice*',
+        'text' => 'Three core services that cover the whole revenue cycle. Choose the support your practice needs today; every service is delivered by specialists, inside your existing systems, with one account manager accountable for results.',
+        'group_label' => 'Core Service',
+        'list_title' => 'What is included',
+        'more' => 'Learn More',
         'why' => [
             'title' => 'One Partner for the Whole Revenue Cycle',
             'text' => 'However many services you choose, they work together under one team and one set of standards.',
@@ -413,7 +419,9 @@ return [
     'service_page' => [
         'primary_cta' => 'Get a Free Practice Review',
         'overview_eyebrow' => 'Service Overview',
-        'sidebar_title' => 'All Services',
+        'sidebar_title' => 'Our Core Services',
+        'features_title' => 'What This Service *Includes*',
+        'features_text' => 'Every part of the service is handled by specialists, inside your existing systems.',
         'help_title' => 'Not sure where to start?',
         'help_text' => 'Tell us about your practice and we will recommend the services that will improve your collections the most, with no obligation.',
         'benefits_text' => 'What practices gain when specialists take this work off their desk.',
@@ -422,7 +430,7 @@ return [
         'faq_title' => 'Frequently Asked Questions',
         'faq_text' => 'Quick answers about how this service works. Need more detail? Talk to our team directly.',
         'faq_cta' => 'Contact Our Team',
-        'related_title' => 'Explore Our Other Services',
+        'related_title' => 'Explore Our Other Core Services',
         'related_text' => 'Services that work hand in hand with this one to protect every dollar you earn.',
         'related_cta' => 'View All Services',
         'cta_title' => 'Ready to Collect More of *What You Earn*?',
@@ -1024,61 +1032,97 @@ MD,
         'affiliate' => 'Thank you for your interest! We will review your application and contact you within a few working days.',
     ],
 
+    /*
+    | Our three core services, each with its own page. "features" are the services included
+    | in it, shown as cards on the service page and as a list on the home page tabs and the
+    | services page. Keep the list in the order you want it to appear.
+    */
     'services' => [
         [
-            'slug' => 'revenue-cycle-management',
-            'title' => 'Revenue Cycle Management',
-            'icon' => 'cycle',
-            'artwork' => 'analytics',
-            'header_image' => 'images/photos/home-welcome.jpg',
-            'excerpt' => 'End-to-end management of your revenue cycle, from patient registration to final payment, with one team accountable for every step.',
+            'slug' => 'credentialing-enrollment',
+            'title' => 'Provider Credentialing & Enrollment',
+            'icon' => 'badge',
+            'artwork' => 'credential',
+            'header_image' => 'images/photos/hero-doctors-duo.jpg',
+            'excerpt' => 'We help healthcare providers get credentialed and enrolled with insurance companies and government healthcare programs, so they can see insured patients and get paid sooner.',
+            'features' => [
+                ['icon' => 'badge', 'title' => 'Provider Credentialing', 'text' => 'We gather and check licences, board certifications, education, work history and malpractice cover, then prepare complete applications that meet each payer\'s credentialing standards.'],
+                ['icon' => 'building', 'title' => 'Medicare and Medicaid Enrollment', 'text' => 'We complete Medicare enrollment through PECOS and state Medicaid applications for individual providers and groups, including reassignment of benefits to your practice.'],
+                ['icon' => 'briefcase', 'title' => 'Commercial Insurance Enrollment', 'text' => 'We apply to the commercial payers that matter in your area and follow each application through contracting until you have an effective date and in-network status.'],
+                ['icon' => 'idcard', 'title' => 'CAQH Profile Management', 'text' => 'We set up and maintain CAQH ProView profiles, upload current documents, complete regular re-attestations and authorize payers to view each profile.'],
+                ['icon' => 'user', 'title' => 'NPI and PECOS Assistance', 'text' => 'We apply for or update individual and group NPIs, set up PECOS access and keep provider and practice details consistent across every record.'],
+                ['icon' => 'refresh', 'title' => 'Re-credentialing and Revalidation', 'text' => 'We track every re-credentialing and Medicare revalidation date and submit early, so no provider loses network status or has claims denied for an expired enrollment.'],
+                ['icon' => 'clipboard', 'title' => 'Enrollment Follow-Up and Status Tracking', 'text' => 'We follow up with payers on a set schedule, record every call and reference number, and send you clear status updates on each application.'],
+            ],
             'body' => <<<'MD'
-Revenue rarely leaks through one big mistake. It slips through small gaps between scheduling, coding, billing and follow-up. Our revenue cycle management service closes those gaps by putting one accountable team in charge of the whole process.
+A provider who is not enrolled with a payer cannot be paid by that payer, no matter how good the care. Credentialing and enrollment involve long applications, strict document requirements and months of follow-up, and a single missing item can push your start date back. Our credentialing specialists take that work off your desk from the first application to every renewal.
 
-## What is included
+## Who we help
 
-- Registration and insurance verification support
-- Charge entry, coding review and claim submission
-- Payment posting, reconciliation and patient statements
-- Denial management and daily accounts receivable follow-up
-- Monthly reporting with clear recommendations
+- **New practices** opening their doors and enrolling with payers for the first time
+- **Growing groups** adding new providers, locations or specialties
+- **Established practices** that need their CAQH profiles, revalidations and payer records kept up to date
 
-## Why it works
+## How it works
 
-Because the same team sees every stage, problems are fixed where they start instead of being patched one claim at a time. You get one point of contact and a clear view of performance every month.
+1. **Document collection.** We send a clear checklist and gather licences, certifications, insurance and practice details in one secure place.
+2. **Applications.** We complete and submit CAQH, Medicare, Medicaid and commercial payer applications in the order that gets you billing soonest.
+3. **Follow-up.** We contact payers regularly, answer their requests quickly and keep you updated on the status of every application.
+4. **Ongoing maintenance.** Once you are enrolled, we keep a calendar of expirations, re-attestations and revalidations so nothing lapses.
+
+## Why it matters
+
+Delays in enrollment mean visits you cannot bill and patients you may have to turn away. With one team tracking every application and deadline, your providers join networks faster and stay in network for as long as they practise with you.
 MD,
             'faqs' => [
-                ['question' => 'Do we have to outsource every part of the cycle?', 'answer' => 'No. Many practices choose full revenue cycle management, but we can also take on individual stages, such as coding or AR follow-up, and expand later.'],
-                ['question' => 'How do we see what is happening with our claims?', 'answer' => 'You receive monthly reports and can ask your account manager for an update at any time. You also keep full visibility in your own practice management system.'],
-                ['question' => 'How soon will we see results?', 'answer' => 'Most practices notice faster claim turnaround within the first month. Improvements in older balances depend on how much AR is outstanding when we begin.'],
+                ['question' => 'How long does credentialing take?', 'answer' => 'It varies by payer and state, and commercial payers can take several months. Starting early and submitting complete applications is the best way to avoid gaps in billing.'],
+                ['question' => 'Can you help a brand-new practice?', 'answer' => 'Yes. We can enroll a new group and its providers and plan the order of applications so you can start billing as soon as possible.'],
+                ['question' => 'Do you maintain credentials after enrollment?', 'answer' => 'Yes. We track revalidations, CAQH re-attestations and licence renewals for as long as we work together.'],
+                ['question' => 'Can we use this service without your billing services?', 'answer' => 'Yes. Credentialing and enrollment can be used on its own or together with our billing and coding services.'],
             ],
         ],
         [
-            'slug' => 'medical-billing',
-            'title' => 'Medical Billing',
-            'icon' => 'receipt',
-            'artwork' => 'claim',
-            'header_image' => 'images/photos/affiliate-partners.jpg',
-            'excerpt' => 'Accurate charge entry and claim submission that get clean claims to payers quickly and keep reimbursements moving.',
+            'slug' => 'medical-billing-rcm',
+            'title' => 'Medical Billing & Revenue Cycle Management (RCM)',
+            'icon' => 'cycle',
+            'artwork' => 'analytics',
+            'header_image' => 'images/photos/home-welcome.jpg',
+            'excerpt' => 'We manage the complete revenue cycle to help healthcare providers improve collections, reduce denials and maintain consistent cash flow.',
+            'features' => [
+                ['icon' => 'idcard', 'title' => 'Patient Eligibility and Benefits Verification', 'text' => 'We check coverage, copays, deductibles and benefit limits before each visit, so your front desk knows what to collect and claims are not denied for eligibility.'],
+                ['icon' => 'clipboard', 'title' => 'Prior Authorization', 'text' => 'We identify services that need approval, submit requests with the right clinical documents and follow up until a decision is received, so care is not delayed.'],
+                ['icon' => 'receipt', 'title' => 'Charge Entry and Claim Submission', 'text' => 'We enter charges from your EHR or superbills, check every claim against payer and coding edits and submit clean claims electronically within 48 hours.'],
+                ['icon' => 'wallet', 'title' => 'Payment Posting', 'text' => 'We post insurance and patient payments from ERAs, EOBs and deposits every business day, so your balances and reports are always accurate.'],
+                ['icon' => 'clock', 'title' => 'Accounts Receivable (AR) Follow-Up', 'text' => 'We work unpaid claims by age and value every day, so balances are resolved before timely filing limits and older AR keeps shrinking.'],
+                ['icon' => 'refresh', 'title' => 'Denial Management and Appeals', 'text' => 'We find out why each claim was denied, correct and resubmit it or file a written appeal, and fix the root cause so the same denial does not return.'],
+                ['icon' => 'phone', 'title' => 'Insurance Follow-Up', 'text' => 'Our team calls payers and uses their portals to chase claims with no response, missing information or processing errors, and records every outcome.'],
+                ['icon' => 'check', 'title' => 'Payment Reconciliation', 'text' => 'We match payments to deposits and to your contracted rates, flag underpayments and overpayments, and resolve credit balances.'],
+                ['icon' => 'chart', 'title' => 'Revenue Cycle Reporting', 'text' => 'Monthly reports show collections, denial trends, AR aging and payer performance in plain language, with clear recommendations for next steps.'],
+            ],
             'body' => <<<'MD'
-Every day a claim waits in a queue is another day before you are paid. Our billers enter charges promptly, check each claim against payer rules and submit electronically, so your revenue keeps flowing.
+Revenue rarely leaks through one big mistake. It slips through small gaps between scheduling, verification, billing, posting and follow-up. Our medical billing and revenue cycle management service closes those gaps by putting one accountable team in charge of every step, from the moment a patient is scheduled to the day the final payment posts.
 
-## What is included
+## From appointment to payment
 
-- Charge entry from your EHR, superbills or encounter forms
-- Claim checks against payer and coding edits
-- Electronic submission through your clearinghouse
-- Rejection handling and resubmission
-- Secondary and tertiary claim billing
+1. **Before the visit.** We verify eligibility and benefits and obtain prior authorizations, so the visit is covered before care is given.
+2. **After the visit.** Charges are entered, checked and submitted as clean claims within 48 hours.
+3. **When payers respond.** Payments are posted and reconciled daily, and every underpayment or denial is flagged.
+4. **Until it is paid.** Unpaid and denied claims are followed up, corrected and appealed until each balance is resolved.
 
-## Built around your workflow
+## Why it works
 
-We work inside your practice management system, follow your fee schedules and agree clear turnaround times, so billing fits naturally into the way your practice already runs.
+Because the same team sees every stage, problems are fixed where they start instead of being patched one claim at a time. We work inside your practice management system, follow your fee schedules and billing rules, and give you one point of contact and a clear view of performance every month.
+
+## Complete or modular
+
+Hand us the whole revenue cycle, or only the stages that need help today, such as AR follow-up or denial management, and add more whenever you are ready.
 MD,
             'faqs' => [
-                ['question' => 'Do you bill secondary insurance?', 'answer' => 'Yes. Once the primary payer has processed a claim, we bill secondary and tertiary payers and follow those balances through to payment.'],
-                ['question' => 'Can you bill from paper superbills?', 'answer' => 'Yes. We can work from scanned superbills or encounter forms as well as directly from your EHR.'],
+                ['question' => 'Do we have to outsource every part of the revenue cycle?', 'answer' => 'No. Many practices choose full revenue cycle management, but we can also take on individual stages, such as eligibility checks or AR follow-up, and expand later.'],
+                ['question' => 'Can you help with old unpaid claims?', 'answer' => 'Yes. We review your aging accounts receivable during onboarding and work older balances alongside new claims, as long as they are still within payer deadlines.'],
                 ['question' => 'Which payers do you bill?', 'answer' => 'We bill Medicare, Medicaid and commercial insurers, as well as workers\' compensation and auto claims when your practice needs it.'],
+                ['question' => 'How do we see what is happening with our claims?', 'answer' => 'You receive monthly reports and can ask your account manager for an update at any time. You also keep full visibility in your own practice management system.'],
+                ['question' => 'How soon will we see results?', 'answer' => 'Most practices notice faster claim turnaround within the first month. Improvements in older balances depend on how much AR is outstanding when we begin.'],
             ],
         ],
         [
@@ -1087,280 +1131,56 @@ MD,
             'icon' => 'code',
             'artwork' => 'security',
             'header_image' => 'images/photos/hero-doctors-laptop.jpg',
-            'excerpt' => 'Certified coders who assign accurate ICD-10-CM, CPT and HCPCS codes and modifiers, so every service is billed correctly.',
+            'excerpt' => 'We provide accurate and compliant medical coding services to support proper claim submission and reimbursement.',
+            'features' => [
+                ['icon' => 'stethoscope', 'title' => 'ICD-10-CM Diagnosis Coding', 'text' => 'We assign diagnosis codes to the highest level of specificity the documentation supports, so medical necessity is clear to every payer.'],
+                ['icon' => 'code', 'title' => 'CPT Procedure Coding', 'text' => 'We code procedures, evaluation and management visits and services accurately, so you are paid in full for the work your providers perform.'],
+                ['icon' => 'pill', 'title' => 'HCPCS Level II Coding', 'text' => 'We code drugs, supplies, durable medical equipment and other services with the correct HCPCS codes and units.'],
+                ['icon' => 'tag', 'title' => 'Modifier Assignment', 'text' => 'We apply the right modifiers and check National Correct Coding Initiative (NCCI) edits, avoiding bundling denials and underpayments.'],
+                ['icon' => 'file', 'title' => 'Medical Record Review', 'text' => 'We review clinical notes to make sure documentation supports the codes billed, and share practical feedback with your providers.'],
+                ['icon' => 'users', 'title' => 'Specialty-Specific Coding', 'text' => 'Coders are matched to your specialties, so the person coding your claims knows the rules, procedures and payer policies that apply to them.'],
+                ['icon' => 'search', 'title' => 'Coding Audits and Reviews', 'text' => 'We audit a sample of your claims and documentation and give you a written report with findings, risks and recommended corrections.'],
+                ['icon' => 'shield', 'title' => 'Coding Accuracy and Compliance', 'text' => 'We follow official coding guidelines and annual code set updates, and check our own work, protecting you from denials and compliance risk.'],
+            ],
             'body' => <<<'MD'
-Coding is where clinical care becomes a claim. Small mistakes, such as a missing modifier or an unspecified diagnosis, can lead to denials, underpayments or compliance risk. Our certified coders make sure every encounter is coded completely and correctly.
+Coding is where clinical care becomes a claim. Small mistakes, such as a missing modifier or an unspecified diagnosis, can lead to denials, underpayments or compliance risk. Our certified coders make sure every encounter is coded completely and correctly, using current ICD-10-CM, CPT and HCPCS Level II guidelines.
 
-## What is included
+## How it works
 
-- ICD-10-CM, CPT and HCPCS Level II code assignment
-- Modifier review and National Correct Coding Initiative (NCCI) checks
-- Evaluation and management level review
-- Documentation feedback for providers
-- Regular coding audits with written findings
+1. **Documentation review.** Coders read the provider's notes for each encounter, not just the charges.
+2. **Code assignment.** Diagnosis, procedure and supply codes and modifiers are assigned and checked against payer edits.
+3. **Queries and feedback.** When documentation is unclear or incomplete, we ask the provider before the claim goes out.
+4. **Regular audits.** We audit our own work and share results with you, so accuracy keeps improving.
 
 ## Better documentation, better claims
 
-When we notice documentation gaps, we share practical feedback with your providers, helping future notes fully support the care they deliver.
+When we notice documentation gaps, we share practical feedback with your providers, helping future notes fully support the care they deliver and reducing the risk of payer audits.
 MD,
             'faqs' => [
                 ['question' => 'Are your coders certified?', 'answer' => 'Our coding team holds industry credentials such as CPC or CCS and completes training on every annual code set update.'],
                 ['question' => 'Can you code for several specialties?', 'answer' => 'Yes. Coders are matched to your specialties, so the person coding your claims understands the rules that apply to them.'],
                 ['question' => 'Do you offer standalone coding audits?', 'answer' => 'Yes. We can audit a sample of your claims and documentation and give you a written report, even if we do not handle your billing.'],
+                ['question' => 'How quickly are encounters coded?', 'answer' => 'Turnaround is agreed with you during onboarding, so coding never holds up claim submission.'],
             ],
         ],
-        [
-            'slug' => 'eligibility-verification',
-            'title' => 'Eligibility & Benefits Verification',
-            'icon' => 'idcard',
-            'artwork' => 'idcard',
-            'header_image' => 'images/photos/about-specialist.jpg',
-            'excerpt' => 'Insurance checks before every visit, so your team knows coverage, copays and deductibles before the patient walks in.',
-            'body' => <<<'MD'
-Many denials start at the front desk: inactive coverage, wrong payer details or missing benefit information. We verify eligibility ahead of each appointment, so problems are solved before the visit instead of after a claim is rejected.
+    ],
 
-## What is included
-
-- Coverage checks for every scheduled patient
-- Copay, coinsurance and deductible details
-- Plan limitations and referral requirements
-- Coordination of benefits checks
-- Results recorded directly in your scheduling system
-
-## Fewer surprises for everyone
-
-Patients know what they will owe, your staff collect the right amount at check-in and claims go out with the correct insurance information.
-MD,
-            'faqs' => [
-                ['question' => 'How far ahead do you verify?', 'answer' => 'Usually one to three business days before each appointment, with same-day checks available for patients added at short notice.'],
-                ['question' => 'Do you check returning patients too?', 'answer' => 'Yes. Coverage can change between visits, so we verify every scheduled patient, not just new ones.'],
-                ['question' => 'Where will our staff see the results?', 'answer' => 'Results are added to your scheduling or practice management system, so your front desk sees them at check-in.'],
-            ],
-        ],
-        [
-            'slug' => 'prior-authorization',
-            'title' => 'Prior Authorization',
-            'icon' => 'clipboard',
-            'artwork' => 'calendar',
-            'header_image' => 'images/photos/contact-specialist.jpg',
-            'excerpt' => 'We request, track and follow up on prior authorizations, so procedures, imaging and medications are approved before they are delivered.',
-            'body' => <<<'MD'
-Prior authorizations are one of the heaviest administrative burdens in healthcare. We take ownership of each request, from gathering clinical notes to chasing the payer for a decision.
-
-## What is included
-
-- Identifying services that need authorization
-- Preparing and submitting requests with supporting notes
-- Tracking status and following up with payers
-- Managing renewals and extensions
-- Alerting your team to approvals and denials
-
-## Keeping care on schedule
-
-With requests submitted early and followed up consistently, fewer appointments are postponed and fewer claims are denied for a missing authorization.
-MD,
-            'faqs' => [
-                ['question' => 'Which services can you handle?', 'answer' => 'Procedures, advanced imaging, specialty medications, therapy visits and durable medical equipment are the most common.'],
-                ['question' => 'What do you need from our providers?', 'answer' => 'Usually the clinical notes that support the request. We tell you exactly what each payer requires.'],
-                ['question' => 'What happens if a request is denied?', 'answer' => 'We review the reason with your team and help prepare a peer-to-peer discussion or an appeal when appropriate.'],
-            ],
-        ],
-        [
-            'slug' => 'denial-management',
-            'title' => 'Denial Management',
-            'icon' => 'refresh',
-            'artwork' => 'claim',
-            'header_image' => 'images/photos/about-hero.jpg',
-            'excerpt' => 'We find out why claims were denied, correct and resubmit them, appeal where needed and fix the causes behind them.',
-            'body' => <<<'MD'
-A denied claim is not lost revenue yet, but it will be if nobody acts on it. We work every denial quickly, then look for the patterns behind them so the same problem does not keep coming back.
-
-## What is included
-
-- Daily review of denials and rejections
-- Corrections and resubmissions
-- Written appeals with supporting documentation
-- Root-cause analysis by payer, provider and reason
-- Prevention recommendations for your team
-
-## Fixing causes, not just claims
-
-Every month we show you which denial reasons cost the most and what we are changing to prevent them.
-MD,
-            'faqs' => [
-                ['question' => 'Do you appeal older denials?', 'answer' => 'Yes, as long as the payer\'s appeal window is still open. We prioritise by value and deadline.'],
-                ['question' => 'How do you track denial trends?', 'answer' => 'Your monthly report groups denials by reason, payer and provider and highlights the changes that will have the biggest impact.'],
-                ['question' => 'Can you work denials from before we joined?', 'answer' => 'Yes. Earlier denials are reviewed during onboarding and worked alongside new claims.'],
-            ],
-        ],
-        [
-            'slug' => 'ar-follow-up',
-            'title' => 'AR Follow-Up',
-            'icon' => 'clock',
-            'artwork' => 'analytics',
-            'header_image' => 'images/photos/home-support.jpg',
-            'excerpt' => 'Persistent follow-up on every unpaid and underpaid claim, so balances do not age quietly in your accounts receivable.',
-            'body' => <<<'MD'
-Unpaid claims rarely resolve themselves. Our AR specialists contact payers, check claim status and push every open balance toward payment, starting with the accounts that matter most.
-
-## What is included
-
-- Aging analysis to prioritise high-value and time-sensitive claims
-- Payer calls and portal status checks
-- Underpayment checks against your fee schedules
-- Corrected claims and reprocessing requests
-- Recovery of older balances during onboarding
-
-## Steady, visible progress
-
-Your monthly reports show older balances shrinking, along with notes on the accounts that need your input.
-MD,
-            'faqs' => [
-                ['question' => 'Can you work our old AR only?', 'answer' => 'Yes. Some practices bring us in just to recover older balances, for example during a staffing gap or a software change.'],
-                ['question' => 'How do you decide which claims to work first?', 'answer' => 'We prioritise by balance, filing deadlines and age, so the most valuable and time-sensitive claims are handled first.'],
-                ['question' => 'Do you contact patients about balances?', 'answer' => 'Patient balances are handled through our patient billing service, in a friendly tone that reflects your practice.'],
-            ],
-        ],
-        [
-            'slug' => 'payment-posting',
-            'title' => 'Payment Posting',
-            'icon' => 'wallet',
-            'artwork' => 'claim',
-            'header_image' => 'images/photos/contact-hero.jpg',
-            'excerpt' => 'Accurate posting of insurance and patient payments, with daily reconciliation that shows exactly what was paid and why.',
-            'body' => <<<'MD'
-Payment posting is more than data entry. Every remittance shows whether a claim was paid correctly, partly denied or needs follow-up. We post payments accurately and act on what they reveal.
-
-## What is included
-
-- Electronic (ERA) and manual (EOB) payment posting
-- Patient payment posting
-- Daily deposit reconciliation
-- Flagging of underpayments and denials from remittances
-- Refund and credit balance management
-
-## Books that balance
-
-Daily reconciliation means your bank deposits, your practice management system and your reports always tell the same story.
-MD,
-            'faqs' => [
-                ['question' => 'Do you post paper EOBs?', 'answer' => 'Yes. We post both electronic remittances and scanned paper EOBs.'],
-                ['question' => 'How do you handle overpayments?', 'answer' => 'We identify credit balances, confirm whether a refund is due and prepare refunds for your approval.'],
-                ['question' => 'How often is posting done?', 'answer' => 'Payments are posted every business day, so your reports always reflect the latest deposits.'],
-            ],
-        ],
-        [
-            'slug' => 'credentialing',
-            'title' => 'Credentialing & Enrollment',
-            'icon' => 'badge',
-            'artwork' => 'credential',
-            'header_image' => 'images/photos/hero-doctors-duo.jpg',
-            'excerpt' => 'Provider credentialing, payer enrollment and revalidation handled from start to finish, so new providers can bill sooner.',
-            'body' => <<<'MD'
-A provider who is not enrolled with a payer cannot be paid by that payer, no matter how good the care. We manage the forms, deadlines and follow-up calls that credentialing requires.
-
-## What is included
-
-- CAQH ProView profile setup and maintenance
-- Commercial payer applications
-- Medicare (PECOS) and Medicaid enrollment
-- Revalidation and re-credentialing reminders
-- Contract and fee schedule tracking
-
-## Never miss a deadline
-
-We keep a calendar of expirations and revalidation dates for every provider, so nothing lapses and no claims are denied because of an expired enrollment.
-MD,
-            'faqs' => [
-                ['question' => 'How long does credentialing take?', 'answer' => 'It varies by payer and state, and commercial payers can take several months. Starting early is the best way to avoid gaps in billing.'],
-                ['question' => 'Can you help a brand-new practice?', 'answer' => 'Yes. We can enroll a new group and its providers and plan the order of applications so you can start billing as soon as possible.'],
-                ['question' => 'Do you maintain credentials after enrollment?', 'answer' => 'Yes. We track revalidations, CAQH attestations and licence renewals for as long as we work together.'],
-            ],
-        ],
-        [
-            'slug' => 'patient-billing',
-            'title' => 'Patient Billing & Support',
-            'icon' => 'chat',
-            'artwork' => 'support',
-            'header_image' => 'images/photos/about-consultation.jpg',
-            'excerpt' => 'Clear patient statements, friendly billing support and flexible payment options that improve collections without hurting relationships.',
-            'body' => <<<'MD'
-As deductibles rise, more of your revenue comes directly from patients. We help you collect it with clear statements and helpful conversations.
-
-## What is included
-
-- Easy-to-read patient statements
-- A patient billing helpline answered in your practice's name
-- Payment plan setup and tracking
-- Online payment links and reminders
-- Respectful follow-up on overdue balances
-
-## Protecting the patient relationship
-
-Our team speaks with patients calmly and clearly, explaining balances and options in a way that reflects the care your practice provides.
-MD,
-            'faqs' => [
-                ['question' => 'Will patients know they are speaking with an outside company?', 'answer' => 'We answer in your practice\'s name and follow scripts you approve, so the experience feels like part of your practice.'],
-                ['question' => 'Can patients pay online?', 'answer' => 'Yes. Statements and reminders can include secure online payment links.'],
-                ['question' => 'Do you send accounts to collections?', 'answer' => 'Only when you ask us to. We follow the collection policy you set and never act on an account without your approval.'],
-            ],
-        ],
-        [
-            'slug' => 'billing-audit',
-            'title' => 'Medical Billing Audit',
-            'icon' => 'search',
-            'artwork' => 'security',
-            'header_image' => 'images/photos/home-choose.jpg',
-            'excerpt' => 'An independent review of your coding, billing and collections that uncovers missed revenue and compliance risks.',
-            'body' => <<<'MD'
-If you are not sure your billing is performing as well as it should, an audit gives you a clear answer. We review a sample of your claims, documentation and processes and report what we find.
-
-## What is included
-
-- Coding and documentation review
-- Charge capture and missed revenue analysis
-- Denial and accounts receivable health check
-- Fee schedule and underpayment review
-- A written report with prioritised recommendations
-
-## A clear plan forward
-
-You receive practical recommendations ranked by impact, whether or not you choose to work with us afterwards.
-MD,
-            'faqs' => [
-                ['question' => 'How long does an audit take?', 'answer' => 'Most audits are completed within a few weeks, depending on the number of providers and the sample size.'],
-                ['question' => 'Will the audit disrupt our staff?', 'answer' => 'Very little. We mainly need read-only system access and a short call with your team.'],
-                ['question' => 'What do we receive at the end?', 'answer' => 'A written report and a walkthrough call explaining our findings and the actions we recommend.'],
-            ],
-        ],
-        [
-            'slug' => 'practice-reporting',
-            'title' => 'Practice Analytics & Reporting',
-            'icon' => 'chart',
-            'artwork' => 'analytics',
-            'header_image' => 'images/photos/team-meeting.jpg',
-            'excerpt' => 'Monthly reports that turn billing data into clear decisions about payers, providers and growth.',
-            'body' => <<<'MD'
-Good decisions need good numbers. We turn your billing data into reports you can actually use, built around the figures every practice owner should know.
-
-## What is included
-
-- Charges, collections and adjustments by month
-- Days in accounts receivable and aging trends
-- Denial rates by payer and reason
-- Provider and location performance
-- Review calls to discuss results and next steps
-
-## Numbers in plain English
-
-Every report comes with a short summary of what changed and what we recommend, so you never have to decode a spreadsheet.
-MD,
-            'faqs' => [
-                ['question' => 'Can reports be customised?', 'answer' => 'Yes. We start with a standard set of measures and add the views that matter most to your practice.'],
-                ['question' => 'Who receives the reports?', 'answer' => 'Anyone you choose, from practice owners to office managers. We can also hold a review call each month.'],
-                ['question' => 'Do we need special software?', 'answer' => 'No. Reports are built from your existing systems and delivered in an easy-to-read format.'],
-            ],
-        ],
+    /*
+    | Addresses of service pages that were merged into the core services above. Visitors and
+    | search engines following an old link are sent permanently to the page that replaced it.
+    */
+    'service_redirects' => [
+        'credentialing' => 'credentialing-enrollment',
+        'revenue-cycle-management' => 'medical-billing-rcm',
+        'medical-billing' => 'medical-billing-rcm',
+        'eligibility-verification' => 'medical-billing-rcm',
+        'prior-authorization' => 'medical-billing-rcm',
+        'denial-management' => 'medical-billing-rcm',
+        'ar-follow-up' => 'medical-billing-rcm',
+        'payment-posting' => 'medical-billing-rcm',
+        'patient-billing' => 'medical-billing-rcm',
+        'practice-reporting' => 'medical-billing-rcm',
+        'billing-audit' => 'medical-coding',
     ],
 
     'specialities' => [
@@ -1389,8 +1209,8 @@ MD,
     ],
 
     'faqs' => [
-        ['question' => 'What does a Medz Solution do?', 'answer' => 'We take care of the work needed to get your practice paid: verifying insurance, coding, submitting claims, posting payments, following up on unpaid claims and appealing denials. You stay in control and receive regular reports.'],
-        ['question' => 'How much do your services cost?', 'answer' => 'Pricing depends on your specialty, claim volume and the services you need. Many practices choose a percentage of collections, so our success is tied to yours. We provide a clear quote after a free practice review.'],
+        ['question' => 'What does Medz-Solutions do?', 'answer' => 'We offer three core services: provider credentialing and enrollment, medical billing and revenue cycle management (RCM), and medical coding. Together they cover the work needed to get your practice paid, from enrolling providers with payers to verifying insurance, coding, submitting claims, posting payments, following up on unpaid claims and appealing denials. You stay in control and receive regular reports.'],
+        ['question' => 'How much do your services cost?', 'answer' => 'Pricing depends on your specialty, claim volume and which core services you need. Many practices choose a percentage of collections, so our success is tied to yours. We provide a clear quote after a free practice review.'],
         ['question' => 'How long does it take to get started?', 'answer' => 'A typical onboarding takes around 30 days from signed agreements, depending on your systems and the number of providers. We plan the transition so billing never stops.'],
         ['question' => 'Do we need to change our software?', 'answer' => 'No. We work inside your existing EHR, practice management system and clearinghouse.'],
         ['question' => 'Is our patient data safe with you?', 'answer' => 'Yes. We sign a business associate agreement before accessing any data, limit access to the people who need it and use secure, encrypted systems.'],

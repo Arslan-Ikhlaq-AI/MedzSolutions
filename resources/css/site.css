@@ -4493,6 +4493,154 @@ a.contact-card-value:hover {
     animation: track-in 0.4s var(--ease-out);
 }
 
+/* Core services: home page tabs, services page rows and the included-services list */
+
+.core-services-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin-bottom: 18px;
+    border-radius: var(--radius-md);
+    background: var(--gradient-brand);
+    color: var(--white);
+}
+
+.core-services-icon .icon {
+    width: 26px;
+    height: 26px;
+}
+
+.core-services .track-panel h4,
+.core-service-row-body h4 {
+    margin-bottom: 14px;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.feature-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0 0 30px;
+    padding: 0;
+    list-style: none;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid var(--divider);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: 15.5px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.feature-list-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--brand);
+}
+
+.feature-list-icon .icon {
+    width: 17px;
+    height: 17px;
+}
+
+.core-service-row {
+    display: grid;
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+    align-items: center;
+    gap: 60px;
+    scroll-margin-top: 120px;
+}
+
+.core-service-row + .core-service-row {
+    margin-top: 90px;
+    padding-top: 90px;
+    border-top: 1px solid var(--divider);
+}
+
+.core-service-row.is-reversed .core-service-row-media {
+    order: 2;
+}
+
+.core-service-row-media {
+    border-radius: var(--radius-xl);
+}
+
+.service-group-label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--accent-dark);
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.core-service-row-body h3 {
+    margin-bottom: 12px;
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.core-service-row-body h3 a:hover {
+    color: var(--brand);
+}
+
+.core-service-row-body > p {
+    margin-bottom: 26px;
+    color: var(--copy);
+    font-family: var(--font-copy);
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+@media (max-width: 991px) {
+    .core-service-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 34px;
+    }
+
+    .core-service-row.is-reversed .core-service-row-media {
+        order: 0;
+    }
+
+    .core-service-row + .core-service-row {
+        margin-top: 60px;
+        padding-top: 60px;
+    }
+}
+
+@media (max-width: 767px) {
+    .feature-list {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .core-service-row-body h3 {
+        font-size: 25px;
+    }
+}
+
 @keyframes track-in {
     from {
         opacity: 0;
@@ -5119,21 +5267,26 @@ a.contact-card-value:hover {
     text-align: center;
 }
 
-.why-tile.is-navy {
-    background: var(--navy);
+.why-tile.is-brand {
+    background: linear-gradient(160deg, var(--brand) 0%, var(--brand-dark) 100%);
     color: var(--white);
 }
 
-.why-tile.is-gold {
-    background: var(--gold);
-    color: var(--ink);
+.why-tile.is-accent {
+    background: linear-gradient(160deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: var(--white);
 }
 
 .why-tile .icon {
-    width: 48px;
-    height: 48px;
+    box-sizing: content-box;
+    width: 30px;
+    height: 30px;
     margin-bottom: 22px;
-    stroke-width: 1.5;
+    padding: 15px;
+    border: 1px solid rgb(255 255 255 / 0.28);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.14);
+    stroke-width: 1.6;
 }
 
 .why-tile h3 {

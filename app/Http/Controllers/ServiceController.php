@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Support\SiteContent;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class ServiceController extends Controller
@@ -14,7 +15,7 @@ class ServiceController extends Controller
         return view('site', [
             'page' => 'services.index',
             'title' => 'Services',
-            'description' => 'Revenue cycle management, medical billing, coding, eligibility, prior authorization, denial management, AR follow-up and credentialing services.',
+            'description' => 'Provider credentialing and enrollment, medical billing and revenue cycle management, and medical coding services.',
             'props' => [
                 'content' => config('site.services_page'),
                 'headerImage' => asset(config('site.services_page.header_image')),
@@ -26,8 +27,17 @@ class ServiceController extends Controller
         ]);
     }
 
-    public function show(string $slug): View
+    /**
+     * A core service page. Addresses of the older, merged service pages redirect permanently to their replacement.
+     */
+    public function show(string $slug): View|RedirectResponse
     {
+        $replacementSlug = config('site.service_redirects', [])[$slug] ?? null;
+
+        if ($replacementSlug) {
+            return redirect()->route('services.show', $replacementSlug, 301);
+        }
+
         $service = $this->content->service($slug);
 
         return view('site', [

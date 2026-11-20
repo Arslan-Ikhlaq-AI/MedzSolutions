@@ -30,7 +30,7 @@ class PageController extends Controller
                     'choose' => asset(config('site.home.choose.image')),
                     'support' => asset(config('site.home.support.image')),
                 ],
-                'services' => $this->content->services()->take(6)->values(),
+                'services' => $this->content->services(),
                 'specialities' => $specialities->take(8)->values(),
                 'specialityNames' => $specialities->pluck('name'),
                 'software' => config('site.software.ehr'),

@@ -13,7 +13,7 @@ export default function WhyBand({ title, text, tiles }) {
                 <SectionHeading title={title} text={text} />
                 <div className={`why-tiles${columns}`}>
                     {tiles.map((tile, index) => (
-                        <article className={`why-tile ${index % 2 ? 'is-gold' : 'is-navy'}`} key={tile.title} data-animate="fade-up" style={{ '--delay': `${(index % 4) * 0.08}s` }}>
+                        <article className={`why-tile ${index % 2 ? 'is-accent' : 'is-brand'}`} key={tile.title} data-animate="fade-up" style={{ '--delay': `${(index % 4) * 0.08}s` }}>
                             <Icon name={tile.icon} />
                             <h3>{tile.title}</h3>
                             <p>{tile.text}</p>

@@ -103,12 +103,12 @@ class SitePagesTest extends TestCase
         config()->set('site.services_page.header_image', 'images/photos/services.jpg');
         config()->set('site.services', [
             [...$this->entry('medical-coding', 'Medical Coding'), 'header_image' => 'images/photos/coding.jpg'],
-            $this->entry('denial-management', 'Denial Management'),
+            $this->entry('payment-reconciliation', 'Payment Reconciliation'),
         ]);
 
         $this->get('/services')->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset('images/photos/services.jpg'));
         $this->get('/services/medical-coding')->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset('images/photos/coding.jpg'));
-        $this->get('/services/denial-management')->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset('images/photos/services.jpg'));
+        $this->get('/services/payment-reconciliation')->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset('images/photos/services.jpg'));
     }
 
     public function test_every_configured_service_header_photo_exists(): void
@@ -148,16 +148,50 @@ class SitePagesTest extends TestCase
         $response->assertSee('<title>Page Not Found – Medz-Solutions</title>', false);
     }
 
-    public function test_home_page_features_six_services_and_five_faqs(): void
+    public function test_home_page_features_every_core_service_and_five_faqs(): void
     {
-        config()->set('site.services', collect(range(1, 7))->map(fn (int $number): array => $this->entry("service-{$number}", "Service {$number}"))->all());
+        config()->set('site.services', collect(range(1, 3))->map(fn (int $number): array => $this->entry("service-{$number}", "Service {$number}"))->all());
         config()->set('site.faqs', collect(range(1, 6))->map(fn (int $number): array => ['question' => "Question {$number}?", 'answer' => 'Answer.'])->all());
 
         $response = $this->get('/');
 
         $response->assertOk();
-        $response->assertViewHas('props', fn (array $props): bool => $props['services']->count() === 6
+        $response->assertViewHas('props', fn (array $props): bool => $props['services']->pluck('slug')->all() === ['service-1', 'service-2', 'service-3']
             && $props['faqs']->count() === 5);
+    }
+
+    public function test_site_offers_the_three_core_services_with_the_services_they_include(): void
+    {
+        $services = collect(config('site.services'));
+
+        $this->assertSame([
+            'Provider Credentialing & Enrollment',
+            'Medical Billing & Revenue Cycle Management (RCM)',
+            'Medical Coding',
+        ], $services->pluck('title')->all());
+
+        foreach ($services as $service) {
+            $this->assertNotEmpty($service['features'], "{$service['title']} lists no included services.");
+        }
+
+        $this->get('/services/medical-billing-rcm')->assertViewHas('props', fn (array $props): bool => collect($props['service']['features'])->pluck('title')->contains('Denial Management and Appeals'));
+    }
+
+    public function test_old_service_addresses_redirect_permanently_to_their_core_service(): void
+    {
+        $this->get('/services/denial-management')->assertRedirect('/services/medical-billing-rcm')->assertStatus(301);
+        $this->get('/services/credentialing')->assertRedirect('/services/credentialing-enrollment')->assertStatus(301);
+        $this->get('/services/billing-audit')->assertRedirect('/services/medical-coding')->assertStatus(301);
+    }
+
+    public function test_every_service_redirect_points_to_an_existing_core_service(): void
+    {
+        $slugs = collect(config('site.services'))->pluck('slug');
+
+        foreach (config('site.service_redirects') as $oldSlug => $newSlug) {
+            $this->assertContains($newSlug, $slugs, "/services/{$oldSlug} redirects to a missing service.");
+            $this->assertNotContains($oldSlug, $slugs, "/services/{$oldSlug} is both a service and a redirect.");
+        }
     }
 
     public function test_published_post_has_a_detail_page(): void

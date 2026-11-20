@@ -70,6 +70,23 @@ export default function ServiceShow({ service, content, headerImage, values, onb
                 </div>
             </section>
 
+            {service.features?.length > 0 && (
+                <section className="section surface service-features">
+                    <div className="container">
+                        <SectionHeading title={content.features_title} text={content.features_text} />
+                        <div className="card-grid three">
+                            {service.features.map((feature, index) => (
+                                <article className="value-card" key={feature.title} data-animate="fade-up" style={{ '--delay': `${(index % 3) * 0.08}s` }}>
+                                    <span className="value-icon"><Icon name={feature.icon} /></span>
+                                    <h3>{feature.title}</h3>
+                                    <p>{feature.text}</p>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
             <WhyBand title={values.title} text={content.benefits_text} tiles={values.items} />
 
             <OnboardingSteps title={content.process_title} text={content.process_text} steps={onboarding.steps} />
@@ -100,7 +117,7 @@ export default function ServiceShow({ service, content, headerImage, values, onb
             <section className="section">
                 <div className="container">
                     <SectionHeading title={content.related_title} text={content.related_text} />
-                    <div className="card-grid three">
+                    <div className={`card-grid ${otherServices.length === 2 ? 'two' : 'three'}`}>
                         {otherServices.map((item, index) => <ServiceCard key={item.slug} service={item} delay={index * 0.08} />)}
                     </div>
                     <div className="section-more" data-animate="fade-up">

@@ -1,6 +1,7 @@
 import Button from '../components/Button.jsx';
 import CheckList from '../components/CheckList.jsx';
 import ContactLinks from '../components/ContactLinks.jsx';
+import CoreServicesTabs from '../components/CoreServicesTabs.jsx';
 import FaqAccordion from '../components/FaqAccordion.jsx';
 import HeroSlider from '../components/HeroSlider.jsx';
 import HoursPanel from '../components/HoursPanel.jsx';
@@ -8,7 +9,6 @@ import Icon from '../components/Icon.jsx';
 import MeetingForm from '../components/MeetingForm.jsx';
 import ReviewForm from '../components/ReviewForm.jsx';
 import SectionHeading from '../components/SectionHeading.jsx';
-import ServiceCard from '../components/ServiceCard.jsx';
 import StatGrid from '../components/StatGrid.jsx';
 import Testimonials from '../components/Testimonials.jsx';
 import { useSite } from '../context.js';
@@ -63,7 +63,7 @@ export default function Home({ content, photos, services, specialities, speciali
                     <SectionHeading title={why.title} text={why.text} />
                     <div className="why-tiles">
                         {why.tiles.map((tile, index) => (
-                            <article className={`why-tile ${index % 2 ? 'is-gold' : 'is-navy'}`} key={tile.title} data-animate="fade-up" style={{ '--delay': `${index * 0.08}s` }}>
+                            <article className={`why-tile ${index % 2 ? 'is-accent' : 'is-brand'}`} key={tile.title} data-animate="fade-up" style={{ '--delay': `${index * 0.08}s` }}>
                                 <Icon name={tile.icon} />
                                 <h3>{tile.title}</h3>
                                 <p>{tile.text}</p>
@@ -91,9 +91,7 @@ export default function Home({ content, photos, services, specialities, speciali
             <section className="section surface">
                 <div className="container">
                     <SectionHeading title={content.services.title} text={content.services.text} />
-                    <div className="card-grid three">
-                        {services.map((service, index) => <ServiceCard key={service.slug} service={service} delay={(index % 3) * 0.08} />)}
-                    </div>
+                    <CoreServicesTabs services={services} tabLabel={content.services.tab_label} listTitle={content.services.list_title} moreLabel={content.services.more} />
                     <div className="section-more" data-animate="fade-up">
                         <Button href={routes.services}>{content.services.cta}</Button>
                     </div>

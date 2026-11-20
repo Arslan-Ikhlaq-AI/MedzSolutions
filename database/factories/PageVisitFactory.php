@@ -20,7 +20,7 @@ class PageVisitFactory extends Factory
     {
         return [
             'visitor_id' => (string) Str::uuid(),
-            'path' => fake()->randomElement(['/', '/services', '/about-us', '/services/denial-management', '/contact-us']),
+            'path' => fake()->randomElement(['/', '/services', '/about-us', '/services/medical-billing-rcm', '/contact-us']),
             'title' => fake()->sentence(3),
             'referrer' => null,
             'utm_source' => null,
