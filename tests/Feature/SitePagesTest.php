@@ -98,6 +98,26 @@ class SitePagesTest extends TestCase
         });
     }
 
+    public function test_service_pages_show_a_header_photo_with_a_fallback_to_the_services_photo(): void
+    {
+        config()->set('site.services_page.header_image', 'images/photos/services.jpg');
+        config()->set('site.services', [
+            [...$this->entry('medical-coding', 'Medical Coding'), 'header_image' => 'images/photos/coding.jpg'],
+            $this->entry('denial-management', 'Denial Management'),
+        ]);
+
+        $this->get('/services')->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset('images/photos/services.jpg'));
+        $this->get('/services/medical-coding')->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset('images/photos/coding.jpg'));
+        $this->get('/services/denial-management')->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset('images/photos/services.jpg'));
+    }
+
+    public function test_every_configured_service_header_photo_exists(): void
+    {
+        $paths = collect(config('site.services'))->pluck('header_image')->push(config('site.services_page.header_image'));
+
+        $paths->each(fn (string $path) => $this->assertFileExists(public_path($path)));
+    }
+
     /**
      * @return array<string, array{0: string}>
      */
@@ -272,6 +292,73 @@ class SitePagesTest extends TestCase
         $response->assertViewHas('shared', fn (array $shared): bool => $shared['company']['map']['embed'] === 'https://www.google.com/maps/embed/v1/place?key=test-key&q=Austin%2C+TX&zoom=12');
     }
 
+    public function test_about_page_shares_its_header_and_intro_photos(): void
+    {
+        $response = $this->get('/about-us');
+
+        $response->assertOk();
+        $response->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset('images/photos/about-hero.jpg')
+            && $props['photos'] === [
+                'main' => asset('images/photos/about-consultation.jpg'),
+                'secondary' => asset('images/photos/about-specialist.jpg'),
+            ]);
+
+        foreach (['about-hero.jpg', 'about-consultation.jpg', 'about-specialist.jpg'] as $photo) {
+            $this->assertFileExists(public_path('images/photos/'.$photo));
+        }
+    }
+
+    public function test_team_page_shares_its_header_photo_and_members(): void
+    {
+        config()->set('site.team_page.members', [
+            ['name' => 'Jane Doe', 'role' => 'Account Manager', 'text' => 'Bio.', 'image' => 'images/team/jane-doe.jpg'],
+            ['name' => 'John Roe', 'role' => 'Medical Coder', 'text' => 'Bio.', 'image' => null],
+        ]);
+
+        $response = $this->get('/meet-our-team');
+
+        $response->assertOk();
+        $response->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset('images/photos/team-office.jpg')
+            && $props['members'][0]['image'] === asset('images/team/jane-doe.jpg')
+            && $props['members'][1]['image'] === null);
+        $this->assertFileExists(public_path('images/photos/team-office.jpg'));
+    }
+
+    public function test_resources_page_shares_its_header_photo_and_explore_links(): void
+    {
+        $response = $this->get('/resources');
+
+        $response->assertOk();
+        $response->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset('images/photos/resources-hero.jpg'));
+        $response->assertViewHas('shared', function (array $shared): bool {
+            return collect(config('site.resources_page.explore'))
+                ->every(fn (array $link): bool => isset($shared['routes'][$link['route']]));
+        });
+        $this->assertFileExists(public_path('images/photos/resources-hero.jpg'));
+    }
+
+    /**
+     * @return array<string, array{0: string, 1: string}>
+     */
+    public static function photoHeaderPages(): array
+    {
+        return [
+            'compliance' => ['/compliance', 'images/photos/compliance-hero.jpg'],
+            'software' => ['/software', 'images/photos/software-hero.jpg'],
+            'blog' => ['/blogs', 'images/photos/blog-hero.jpg'],
+        ];
+    }
+
+    #[DataProvider('photoHeaderPages')]
+    public function test_resource_section_pages_share_their_header_photo(string $url, string $photo): void
+    {
+        $response = $this->get($url);
+
+        $response->assertOk();
+        $response->assertViewHas('props', fn (array $props): bool => $props['headerImage'] === asset($photo));
+        $this->assertFileExists(public_path($photo));
+    }
+
     public function test_every_page_shares_a_whatsapp_link_to_the_company_number(): void
     {
         config()->set('site.company.whatsapp', ['number' => '923460766863', 'message' => 'Hello & welcome']);
@@ -280,6 +367,31 @@ class SitePagesTest extends TestCase
 
         $response->assertOk();
         $response->assertViewHas('shared', fn (array $shared): bool => $shared['company']['whatsapp_url'] === 'https://wa.me/923460766863?text=Hello%20%26%20welcome');
+    }
+
+    public function test_every_page_shares_the_company_social_profiles(): void
+    {
+        $response = $this->get('/about-us');
+
+        $response->assertOk();
+        $response->assertViewHas('shared', fn (array $shared): bool => collect($shared['company']['social'])->pluck('url', 'network')->all() === [
+            'linkedin' => 'https://www.linkedin.com/company/112043392/',
+            'facebook' => 'https://www.facebook.com/profile.php?id=61596137231105',
+            'instagram' => 'https://www.instagram.com/medzsolutions/',
+            'tiktok' => 'https://www.tiktok.com/@medz.solutions',
+        ]);
+    }
+
+    public function test_every_page_links_the_social_profiles_in_its_organization_schema(): void
+    {
+        config()->set('site.company.social', [
+            ['network' => 'linkedin', 'label' => 'LinkedIn', 'url' => 'https://www.linkedin.com/company/example/'],
+        ]);
+
+        $response = $this->get('/contact-us');
+
+        $response->assertOk();
+        $response->assertSee('"sameAs":["https://www.linkedin.com/company/example/"]', false);
     }
 
     public function test_every_page_shares_the_service_navigation(): void

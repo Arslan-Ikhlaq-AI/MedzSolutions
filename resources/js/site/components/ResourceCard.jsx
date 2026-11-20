@@ -1,6 +1,8 @@
 import Icon from './Icon.jsx';
 import Media from './Media.jsx';
 
+const typeIcons = { checklist: 'clipboard', glossary: 'book', guide: 'file' };
+
 export default function ResourceCard({ resource, delay = 0, tone }) {
     return (
         <article className="resource-card" data-animate="fade-up" style={{ '--delay': `${delay}s` }}>
@@ -8,7 +10,7 @@ export default function ResourceCard({ resource, delay = 0, tone }) {
                 <Media item={resource} tone={tone} ratio="16 / 9" />
             </a>
             <div className="resource-card-body">
-                <span className="tag">{resource.type}</span>
+                <span className="tag resource-tag"><Icon name={typeIcons[resource.type.toLowerCase()] ?? 'file'} />{resource.type}</span>
                 <h3><a href={resource.url}>{resource.title}</a></h3>
                 <p>{resource.excerpt}</p>
                 <a className="text-link" href={resource.url}>Read the {resource.type.toLowerCase()} <Icon name="arrow" /></a>

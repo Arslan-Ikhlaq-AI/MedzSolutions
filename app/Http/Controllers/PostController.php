@@ -21,6 +21,7 @@ class PostController extends Controller
             'description' => 'Practical medical billing, coding and revenue cycle advice from the Medz-Solutions team.',
             'props' => [
                 'content' => config('site.posts_page'),
+                'headerImage' => asset(config('site.posts_page.header_image')),
                 'posts' => $this->content->posts($search, $category),
                 'categories' => $this->content->postCategories(),
                 'latest' => $this->content->posts()->take(3)->values(),

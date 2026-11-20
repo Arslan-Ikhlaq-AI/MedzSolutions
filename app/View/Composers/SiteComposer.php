@@ -51,8 +51,26 @@ class SiteComposer
             'year' => now()->year,
         ]);
 
+        $view->with('organizationSchema', $this->organizationSchema());
         $view->with('trackingIntegrations', $this->cookies->integrations());
         $view->with('consentVersion', (string) config('site.cookies.version'));
+    }
+
+    /**
+     * Schema.org Organization markup that ties the company's social profiles to the website.
+     */
+    private function organizationSchema(): string
+    {
+        return json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            'name' => config('site.company.name'),
+            'url' => url('/'),
+            'logo' => asset('images/brand/logo-mark-128.png'),
+            'email' => config('site.company.email'),
+            'telephone' => config('site.company.phone'),
+            'sameAs' => array_column(config('site.company.social', []), 'url'),
+        ], JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_THROW_ON_ERROR);
     }
 
     /**

@@ -3,17 +3,19 @@ import Button from './Button.jsx';
 import SplitText from './SplitText.jsx';
 
 /**
- * Page title band with breadcrumbs. An optional photo sits behind the brand overlay.
+ * Page title band with breadcrumbs. An optional photo sits behind the brand overlay;
+ * "imagePosition" sets which part of it stays in view, and "compact" gives a shorter band
+ * holding only the title and breadcrumbs.
  */
-export default function PageHeader({ title, crumbs = [], text, image, actions = [] }) {
+export default function PageHeader({ title, crumbs = [], text, image, imagePosition, compact = false, actions = [] }) {
     const { shared } = useSite();
     const trail = [{ label: 'Home', url: shared.routes.home }, ...crumbs];
+    const imageStyle = image
+        ? { '--page-header-image': `url("${image}")`, ...(imagePosition && { '--page-header-position': imagePosition }) }
+        : undefined;
 
     return (
-        <section
-            className={`page-header${image ? ' has-image' : ''}`}
-            style={image ? { '--page-header-image': `url("${image}")` } : undefined}
-        >
+        <section className={['page-header', image && 'has-image', compact && 'is-compact'].filter(Boolean).join(' ')} style={imageStyle}>
             <div className="container">
                 <div className="page-header-box">
                     <SplitText as="h1" text={title} />

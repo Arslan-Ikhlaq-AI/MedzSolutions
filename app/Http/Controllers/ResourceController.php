@@ -17,6 +17,7 @@ class ResourceController extends Controller
             'description' => 'Free checklists and guides that help healthcare practices improve eligibility checks, credentialing and denial prevention.',
             'props' => [
                 'content' => config('site.resources_page'),
+                'headerImage' => asset(config('site.resources_page.header_image')),
                 'resources' => $this->content->resources(),
                 'posts' => $this->content->posts()->take(3)->values(),
             ],

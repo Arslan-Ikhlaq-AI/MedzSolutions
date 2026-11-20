@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Button from '../components/Button.jsx';
 import { phoneHref } from '../components/ContactLinks.jsx';
 import Icon from '../components/Icon.jsx';
+import SocialLinks from '../components/SocialLinks.jsx';
 import { useSite } from '../context.js';
 import Logo from './Logo.jsx';
 
@@ -15,7 +16,10 @@ function TopBar({ company }) {
                     <li><Icon name="clock" />{company.hours[0].days}: {company.hours[0].time}</li>
                     <li><Icon name="mail" /><a href={`mailto:${company.email}`}>{company.email}</a></li>
                 </ul>
-                <a className="top-bar-phone" href={phoneHref(company.phone)}><Icon name="phone" />Call us: {company.phone}</a>
+                <div className="top-bar-end">
+                    <a className="top-bar-phone" href={phoneHref(company.phone)}><Icon name="phone" />Call us: {company.phone}</a>
+                    <SocialLinks className="top-bar-social" />
+                </div>
             </div>
         </div>
     );
@@ -165,6 +169,10 @@ export default function Header() {
                                 );
                             })}
                         </ul>
+                        <div className="mobile-menu-social">
+                            <span>Follow us</span>
+                            <SocialLinks />
+                        </div>
                     </nav>
                 </div>
             </div>

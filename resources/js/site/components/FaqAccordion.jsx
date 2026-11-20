@@ -12,17 +12,21 @@ export default function FaqAccordion({ items }) {
                 const buttonId = `${baseId}-question-${index}`;
                 const panelId = `${baseId}-answer-${index}`;
 
+                // The scroll animation adds "is-visible" straight to the DOM, so it lives on a wrapper
+                // whose className React never re-renders; otherwise toggling "is-open" would wipe it.
                 return (
-                    <div className={`faq-item${isOpen ? ' is-open' : ''}`} key={item.question} data-animate="fade-up" style={{ '--delay': `${Math.min(index, 4) * 0.08}s` }}>
-                        <h3 className="faq-question">
-                            <button type="button" id={buttonId} aria-expanded={isOpen} aria-controls={panelId} onClick={() => setOpenIndex(isOpen ? null : index)}>
-                                <span>{item.question}</span>
-                                <span className="faq-icon"><Icon name="chevron" /></span>
-                            </button>
-                        </h3>
-                        <div className="faq-answer" id={panelId} role="region" aria-labelledby={buttonId}>
-                            <div className="faq-answer-inner">
-                                <p>{item.answer}</p>
+                    <div key={item.question} data-animate="fade-up" style={{ '--delay': `${Math.min(index, 4) * 0.08}s` }}>
+                        <div className={`faq-item${isOpen ? ' is-open' : ''}`}>
+                            <h3 className="faq-question">
+                                <button type="button" id={buttonId} aria-expanded={isOpen} aria-controls={panelId} onClick={() => setOpenIndex(isOpen ? null : index)}>
+                                    <span>{item.question}</span>
+                                    <span className="faq-icon"><Icon name="chevron" /></span>
+                                </button>
+                            </h3>
+                            <div className="faq-answer" id={panelId} role="region" aria-labelledby={buttonId}>
+                                <div className="faq-answer-inner">
+                                    <p>{item.answer}</p>
+                                </div>
                             </div>
                         </div>
                     </div>

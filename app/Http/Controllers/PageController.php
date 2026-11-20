@@ -49,6 +49,11 @@ class PageController extends Controller
             'description' => 'Learn how the Medz-Solutions team of billers, coders and account managers helps healthcare practices get paid accurately and on time.',
             'props' => [
                 'content' => config('site.about'),
+                'headerImage' => asset(config('site.about.header_image')),
+                'photos' => [
+                    'main' => asset(config('site.about.intro.image')),
+                    'secondary' => asset(config('site.about.intro.secondary_image')),
+                ],
                 'commitments' => config('site.home.commitments'),
             ],
         ]);
@@ -62,6 +67,10 @@ class PageController extends Controller
             'description' => 'Meet the Medz-Solutions teams behind every clean claim: account management, billing, coding, AR, credentialing and patient support.',
             'props' => [
                 'content' => config('site.team_page'),
+                'headerImage' => asset(config('site.team_page.header_image')),
+                'members' => collect(config('site.team_page.members'))
+                    ->map(fn (array $member): array => [...$member, 'image' => $member['image'] ? asset($member['image']) : null])
+                    ->all(),
             ],
         ]);
     }
@@ -87,6 +96,7 @@ class PageController extends Controller
             'description' => 'The EHR, practice management and clearinghouse platforms the Medz-Solutions billing team works with.',
             'props' => [
                 'content' => config('site.software_page'),
+                'headerImage' => asset(config('site.software_page.header_image')),
                 'software' => config('site.software'),
             ],
         ]);
@@ -100,6 +110,7 @@ class PageController extends Controller
             'description' => 'How Medz-Solutions protects patient information and keeps billing work aligned with HIPAA and coding guidelines.',
             'props' => [
                 'content' => config('site.compliance_page'),
+                'headerImage' => asset(config('site.compliance_page.header_image')),
             ],
         ]);
     }

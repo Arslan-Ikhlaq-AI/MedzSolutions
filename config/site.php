@@ -25,8 +25,8 @@ return [
         'name' => 'Medz-Solutions',
         'tagline' => 'A streamlined medical billing company',
         'summary' => 'Medz-Solutions handles medical billing, coding and revenue cycle management for healthcare practices across the USA, so providers can focus on patients while we make sure they are paid accurately and on time.',
-        'email' => 'hello@medzsolutions.com',
-        'phone' => '+1 (555) 010-0123',
+        'email' => 'info@medzsolutions.com',
+        'phone' => '+971 55 8531 034',
         'address' => 'Remote-first team serving practices across the USA',
         'hours' => [
             ['days' => 'Monday – Friday', 'time' => '9:00 AM – 6:00 PM (ET)'],
@@ -34,12 +34,19 @@ return [
         ],
         // International format without "+" or leading zeros: 03460766863 becomes 923460766863.
         'whatsapp' => [
-            'number' => '923460766863',
+            'number' => '971558531034',
             'message' => 'Hello Medz-Solutions, I would like to know more about your medical billing services.',
         ],
         'map' => [
             'query' => 'United States',
             'zoom' => 3,
+        ],
+        // Shown as icons in the footer. "network" picks the icon: linkedin, facebook, instagram or tiktok.
+        'social' => [
+            ['network' => 'linkedin', 'label' => 'LinkedIn', 'url' => 'https://www.linkedin.com/company/112043392/'],
+            ['network' => 'facebook', 'label' => 'Facebook', 'url' => 'https://www.facebook.com/profile.php?id=61596137231105'],
+            ['network' => 'instagram', 'label' => 'Instagram', 'url' => 'https://www.instagram.com/medzsolutions/'],
+            ['network' => 'tiktok', 'label' => 'TikTok', 'url' => 'https://www.tiktok.com/@medz.solutions'],
         ],
     ],
 
@@ -134,19 +141,19 @@ return [
     'home' => [
         'slides' => [
             [
-                'image' => 'images/photos/hero-consultation.jpg',
+                'image' => 'images/photos/hero-doctors-clinic.jpg',
                 'eyebrow' => 'Medical Billing & Revenue Cycle Management',
                 'title' => 'Get Paid Faster for the Care *You Provide*',
                 'body' => 'At **Medz-Solutions**, our billing team takes charge entry, claims, payment posting and follow-up off your desk, so clean claims go out quickly and the revenue you have earned actually reaches your account.',
             ],
             [
-                'image' => 'images/photos/hero-team-review.jpg',
+                'image' => 'images/photos/hero-doctors-duo.jpg',
                 'eyebrow' => 'Revenue Cycle Management',
                 'title' => 'Fewer Denials, Steadier Cash Flow, *Clearer Numbers*',
                 'body' => 'We check every claim before it leaves, chase every unpaid balance and send you reports written in plain English, so you always know where your money is and what is holding it up.',
             ],
             [
-                'image' => 'images/photos/hero-nurse-tablet.jpg',
+                'image' => 'images/photos/hero-doctors-laptop.jpg',
                 'eyebrow' => 'Credentialing & Enrollment',
                 'title' => 'Start Seeing Insured Patients *Sooner*',
                 'body' => 'From CAQH profiles to payer applications and revalidations, **Medz-Solutions** manages the paperwork and the follow-up calls, so your providers can join networks without months of back-and-forth.',
@@ -307,7 +314,13 @@ return [
     ],
 
     'about' => [
+        'header_text' => 'A dedicated team of billers, certified coders and account managers working as an extension of your practice.',
+        'header_image' => 'images/photos/about-hero.jpg',
         'intro' => [
+            'image' => 'images/photos/about-consultation.jpg',
+            'image_alt' => 'Physician listening to a patient during a consultation',
+            'secondary_image' => 'images/photos/about-specialist.jpg',
+            'secondary_image_alt' => 'Medical specialist reviewing records on a tablet',
             'eyebrow' => 'Who We Are',
             'title' => 'Medical Billing Specialists *on Your Side*',
             'paragraphs' => [
@@ -341,9 +354,21 @@ return [
     ],
 
     'team_page' => [
-        'eyebrow' => 'Meet Our Team',
+        'header_text' => 'Billers, coders and account managers who treat your practice\'s revenue as if it were their own.',
+        'header_image' => 'images/photos/team-office.jpg',
         'title' => 'The People Behind *Every Clean Claim*',
-        'text' => 'Every practice we support is looked after by specialists from each of these teams, working together under one dedicated account manager.',
+        'text' => 'Meet some of the specialists who look after our practices every day, from the first claim to the final payment.',
+        // Sample profiles. Set "image" to a path such as images/team/sarah-mitchell.jpg once real photos are ready.
+        'members' => [
+            ['name' => 'Sarah Mitchell', 'role' => 'Operations Director', 'text' => 'Oversees every client team and keeps our service standards consistent across all practices.', 'image' => null],
+            ['name' => 'Daniel Brooks', 'role' => 'Senior Account Manager', 'text' => 'Your main point of contact, setting priorities with you and reporting on results each month.', 'image' => null],
+            ['name' => 'Ayesha Khan', 'role' => 'Billing Team Lead', 'text' => 'Leads charge entry and claim submission, making sure clean claims go out within 48 hours.', 'image' => null],
+            ['name' => 'Michael Reyes', 'role' => 'Certified Medical Coder', 'text' => 'Reviews documentation and assigns accurate codes and modifiers for every encounter.', 'image' => null],
+            ['name' => 'Emily Carter', 'role' => 'AR & Denials Specialist', 'text' => 'Chases unpaid claims, works denials and files appeals until each balance is resolved.', 'image' => null],
+            ['name' => 'Omar Siddiqui', 'role' => 'Credentialing Specialist', 'text' => 'Enrolls providers with payers and keeps CAQH profiles and revalidations up to date.', 'image' => null],
+        ],
+        'departments_title' => 'Teams That Work *Together for You*',
+        'departments_text' => 'Every practice we support is looked after by specialists from each of these teams, working together under one dedicated account manager.',
         'departments' => [
             ['icon' => 'users', 'title' => 'Account Management', 'text' => 'Your main point of contact. Account managers learn your practice, set priorities with you and keep every other team aligned with your goals.'],
             ['icon' => 'receipt', 'title' => 'Billing & Claims', 'text' => 'Charge entry, claim checks and submission, handled promptly and in line with each payer\'s requirements.'],
@@ -356,21 +381,52 @@ return [
         'join_text' => 'We are always interested in hearing from skilled billers, coders and healthcare administrators.',
     ],
 
+    /*
+    | "header_image" is the photo behind the page title. Each service can set its own
+    | "header_image" below; services without one fall back to this page's photo.
+    */
     'services_page' => [
-        'eyebrow' => 'Our Services',
+        'header_image' => 'images/photos/hero-doctors-clinic.jpg',
+        'header_title' => 'Our Services',
+        'primary_cta' => 'Get a Free Practice Review',
         'title' => 'Medical Billing Services for *Every Kind of Practice*',
+        'text' => 'Choose the support your practice needs today. Every service is delivered by specialists, inside your existing systems, with one account manager accountable for results.',
+        'why' => [
+            'title' => 'One Partner for the Whole Revenue Cycle',
+            'text' => 'However many services you choose, they work together under one team and one set of standards.',
+            'tiles' => [
+                ['icon' => 'layers', 'title' => 'Complete or Modular', 'text' => 'Hand us the whole cycle or only the stages that need help, and add more whenever you are ready.'],
+                ['icon' => 'users', 'title' => 'One Accountable Team', 'text' => 'Billers, coders and AR specialists share notes and answer to one account manager.'],
+                ['icon' => 'plug', 'title' => 'Inside Your Systems', 'text' => 'We work in your EHR, practice management system and clearinghouse, so nothing changes for staff.'],
+                ['icon' => 'chart', 'title' => 'Results You Can See', 'text' => 'Monthly reports show collections, denials and AR in plain language, with clear next steps.'],
+            ],
+        ],
+        'process_title' => 'Getting Started Is *Simple*',
+        'process_text' => 'A clear, four-step handover that keeps your billing running the whole time.',
+        'faq_title' => 'Questions About Our Services',
+        'faq_text' => 'Straight answers to what practices ask before they outsource. Can\'t find yours? Our team is a phone call away.',
+        'faq_cta' => 'View All FAQs',
+        'cta_title' => 'Not Sure Which Services *You Need*?',
+        'cta_text' => 'Tell us where your revenue gets stuck and a billing specialist will recommend practical next steps, free of charge.',
     ],
 
     'service_page' => [
+        'primary_cta' => 'Get a Free Practice Review',
+        'overview_eyebrow' => 'Service Overview',
         'sidebar_title' => 'All Services',
         'help_title' => 'Not sure where to start?',
         'help_text' => 'Tell us about your practice and we will recommend the services that will improve your collections the most, with no obligation.',
-        'faq_eyebrow' => 'Common Questions',
-        'faq_title' => 'Frequently Asked *Questions*',
-        'ask_title' => 'Still have a question?',
-        'ask_text' => 'Our team is happy to talk through your billing challenges. Reach out and we will reply within one working day.',
-        'related_eyebrow' => 'More Services',
-        'related_title' => 'Explore Our Other *Services*',
+        'benefits_text' => 'What practices gain when specialists take this work off their desk.',
+        'process_title' => 'How We Get *Started*',
+        'process_text' => 'A clear, four-step handover that keeps your billing running the whole time.',
+        'faq_title' => 'Frequently Asked Questions',
+        'faq_text' => 'Quick answers about how this service works. Need more detail? Talk to our team directly.',
+        'faq_cta' => 'Contact Our Team',
+        'related_title' => 'Explore Our Other Services',
+        'related_text' => 'Services that work hand in hand with this one to protect every dollar you earn.',
+        'related_cta' => 'View All Services',
+        'cta_title' => 'Ready to Collect More of *What You Earn*?',
+        'cta_text' => 'Book a free practice review and we will show you where revenue is slipping and how to recover it.',
     ],
 
     'specialities_page' => [
@@ -381,13 +437,28 @@ return [
         'cta_text' => 'We support many more specialties than we can list here. Get in touch and we will tell you how we can help.',
     ],
 
+    /*
+    | Software, Compliance and Blog header photos are free to use from Pexels (no attribution
+    | required): pexels.com/photo/7088530, pexels.com/photo/7578803 and pexels.com/photo/210661
+    */
     'software_page' => [
-        'eyebrow' => 'Software',
+        'header_image' => 'images/photos/software-hero.jpg',
         'title' => 'Software Platforms *We Work With*',
         'text' => 'Our team works directly inside the systems your practice already relies on, so there is nothing new for you to buy or learn.',
         'ehr_title' => 'EHR & Practice Management Systems',
+        'ehr_text' => 'Charge entry, coding, payment posting and reporting, all done inside your own system.',
         'clearinghouse_title' => 'Clearinghouses & Payer Portals',
+        'clearinghouse_text' => 'Claim submission, eligibility checks, status tracking and remittances.',
         'note' => 'Using a different system? We regularly learn new platforms. Ask us about yours.',
+        'how' => [
+            'title' => 'How We Work *Inside Your Systems*',
+            'text' => 'Your staff keep the tools they know. We simply log in and get to work alongside them.',
+            'tiles' => [
+                ['icon' => 'lock', 'title' => 'Secure, Named Access', 'text' => 'Each specialist gets their own login with multi-factor authentication, and you can remove access at any time.'],
+                ['icon' => 'layers', 'title' => 'Your Workflow, Unchanged', 'text' => 'We follow your templates, fee schedules and billing rules, so nothing changes for your front desk or providers.'],
+                ['icon' => 'chart', 'title' => 'Reports From Your Data', 'text' => 'Monthly reports are built from your own system, so our numbers always match what you see.'],
+            ],
+        ],
         'form_title' => 'Ask About *Your System*',
         'form_text' => 'Tell us which software you use and how your practice is set up. We will explain exactly how we would work with it.',
         'subject' => 'Software question',
@@ -406,7 +477,13 @@ return [
     ],
 
     'compliance_page' => [
-        'eyebrow' => 'Compliance',
+        'header_image' => 'images/photos/compliance-hero.jpg',
+        'highlights' => [
+            ['icon' => 'file', 'label' => 'BAA signed before any access'],
+            ['icon' => 'lock', 'label' => 'Multi-factor login on every system'],
+            ['icon' => 'users', 'label' => 'Annual HIPAA training for all staff'],
+            ['icon' => 'search', 'label' => 'Regular internal coding audits'],
+        ],
         'title' => 'Protecting Patient Data Is *Part of the Job*',
         'intro' => 'Billing work means handling protected health information every single day. Here is how **Medz-Solutions** keeps that information safe and keeps our work aligned with healthcare regulations.',
         'sections' => [
@@ -422,10 +499,25 @@ return [
         'subject' => 'Compliance information request',
     ],
 
+    /*
+    | The Resources header photo is free to use from Pexels (no attribution required):
+    | pexels.com/photo/48604
+    */
     'resources_page' => [
-        'eyebrow' => 'Resources',
+        'header_image' => 'images/photos/resources-hero.jpg',
         'title' => 'Helpful Guides for *Healthcare Practices*',
         'text' => 'Practical checklists and guides to help your team improve billing, from the front desk to final payment.',
+        'explore_title' => 'Explore *More Resources*',
+        'explore_text' => 'Learn how we work, which systems we support and the specialties we bill for.',
+        'explore' => [
+            ['icon' => 'shield', 'title' => 'Compliance', 'text' => 'How we protect patient data and keep coding and billing compliant.', 'route' => 'compliance'],
+            ['icon' => 'plug', 'title' => 'Software', 'text' => 'The EHR, practice management and clearinghouse systems we work in.', 'route' => 'software'],
+            ['icon' => 'stethoscope', 'title' => 'Specialities', 'text' => 'The medical specialties our billers and coders support every day.', 'route' => 'specialities'],
+            ['icon' => 'chat', 'title' => 'FAQs', 'text' => 'Straight answers to the questions practices ask us most often.', 'route' => 'faqs'],
+        ],
+        'cta_title' => 'Need Help With *Something Specific*?',
+        'cta_text' => 'Our billing specialists are happy to answer your questions, with no obligation.',
+        'cta_label' => 'Talk to a Specialist',
     ],
 
     'resources' => [
@@ -844,8 +936,10 @@ MD,
     ],
 
     'posts_page' => [
-        'eyebrow' => 'Our Blog',
+        'header_image' => 'images/photos/blog-hero.jpg',
         'title' => 'Billing Insights for *Busy Practices*',
+        'text' => 'Practical advice on billing, coding and getting paid, written by the people who do it every day.',
+        'featured_label' => 'Latest Article',
         'search_label' => 'Search articles',
         'categories_title' => 'Categories',
         'latest_title' => 'Latest Articles',
@@ -875,6 +969,8 @@ MD,
             ['title' => 'We talk it through', 'text' => 'A short call to understand your practice, payers and goals.'],
             ['title' => 'You get clear recommendations', 'text' => 'A free practice review with practical next steps, no obligation.'],
         ],
+        'follow_title' => 'Follow Medz-Solutions',
+        'follow_text' => 'Billing tips, payer updates and news from our team. Follow us wherever you spend your time online.',
         'map_eyebrow' => 'Where We Work',
         'map_title' => 'Serving Practices *Across the USA*',
         'map_text' => 'Our remote-first team supports practices in every state. Call or email us and we will arrange a time that suits you.',
@@ -934,6 +1030,7 @@ MD,
             'title' => 'Revenue Cycle Management',
             'icon' => 'cycle',
             'artwork' => 'analytics',
+            'header_image' => 'images/photos/home-welcome.jpg',
             'excerpt' => 'End-to-end management of your revenue cycle, from patient registration to final payment, with one team accountable for every step.',
             'body' => <<<'MD'
 Revenue rarely leaks through one big mistake. It slips through small gaps between scheduling, coding, billing and follow-up. Our revenue cycle management service closes those gaps by putting one accountable team in charge of the whole process.
@@ -961,6 +1058,7 @@ MD,
             'title' => 'Medical Billing',
             'icon' => 'receipt',
             'artwork' => 'claim',
+            'header_image' => 'images/photos/affiliate-partners.jpg',
             'excerpt' => 'Accurate charge entry and claim submission that get clean claims to payers quickly and keep reimbursements moving.',
             'body' => <<<'MD'
 Every day a claim waits in a queue is another day before you are paid. Our billers enter charges promptly, check each claim against payer rules and submit electronically, so your revenue keeps flowing.
@@ -988,6 +1086,7 @@ MD,
             'title' => 'Medical Coding',
             'icon' => 'code',
             'artwork' => 'security',
+            'header_image' => 'images/photos/hero-doctors-laptop.jpg',
             'excerpt' => 'Certified coders who assign accurate ICD-10-CM, CPT and HCPCS codes and modifiers, so every service is billed correctly.',
             'body' => <<<'MD'
 Coding is where clinical care becomes a claim. Small mistakes, such as a missing modifier or an unspecified diagnosis, can lead to denials, underpayments or compliance risk. Our certified coders make sure every encounter is coded completely and correctly.
@@ -1015,6 +1114,7 @@ MD,
             'title' => 'Eligibility & Benefits Verification',
             'icon' => 'idcard',
             'artwork' => 'idcard',
+            'header_image' => 'images/photos/about-specialist.jpg',
             'excerpt' => 'Insurance checks before every visit, so your team knows coverage, copays and deductibles before the patient walks in.',
             'body' => <<<'MD'
 Many denials start at the front desk: inactive coverage, wrong payer details or missing benefit information. We verify eligibility ahead of each appointment, so problems are solved before the visit instead of after a claim is rejected.
@@ -1042,6 +1142,7 @@ MD,
             'title' => 'Prior Authorization',
             'icon' => 'clipboard',
             'artwork' => 'calendar',
+            'header_image' => 'images/photos/contact-specialist.jpg',
             'excerpt' => 'We request, track and follow up on prior authorizations, so procedures, imaging and medications are approved before they are delivered.',
             'body' => <<<'MD'
 Prior authorizations are one of the heaviest administrative burdens in healthcare. We take ownership of each request, from gathering clinical notes to chasing the payer for a decision.
@@ -1069,6 +1170,7 @@ MD,
             'title' => 'Denial Management',
             'icon' => 'refresh',
             'artwork' => 'claim',
+            'header_image' => 'images/photos/about-hero.jpg',
             'excerpt' => 'We find out why claims were denied, correct and resubmit them, appeal where needed and fix the causes behind them.',
             'body' => <<<'MD'
 A denied claim is not lost revenue yet, but it will be if nobody acts on it. We work every denial quickly, then look for the patterns behind them so the same problem does not keep coming back.
@@ -1096,6 +1198,7 @@ MD,
             'title' => 'AR Follow-Up',
             'icon' => 'clock',
             'artwork' => 'analytics',
+            'header_image' => 'images/photos/home-support.jpg',
             'excerpt' => 'Persistent follow-up on every unpaid and underpaid claim, so balances do not age quietly in your accounts receivable.',
             'body' => <<<'MD'
 Unpaid claims rarely resolve themselves. Our AR specialists contact payers, check claim status and push every open balance toward payment, starting with the accounts that matter most.
@@ -1123,6 +1226,7 @@ MD,
             'title' => 'Payment Posting',
             'icon' => 'wallet',
             'artwork' => 'claim',
+            'header_image' => 'images/photos/contact-hero.jpg',
             'excerpt' => 'Accurate posting of insurance and patient payments, with daily reconciliation that shows exactly what was paid and why.',
             'body' => <<<'MD'
 Payment posting is more than data entry. Every remittance shows whether a claim was paid correctly, partly denied or needs follow-up. We post payments accurately and act on what they reveal.
@@ -1150,6 +1254,7 @@ MD,
             'title' => 'Credentialing & Enrollment',
             'icon' => 'badge',
             'artwork' => 'credential',
+            'header_image' => 'images/photos/hero-doctors-duo.jpg',
             'excerpt' => 'Provider credentialing, payer enrollment and revalidation handled from start to finish, so new providers can bill sooner.',
             'body' => <<<'MD'
 A provider who is not enrolled with a payer cannot be paid by that payer, no matter how good the care. We manage the forms, deadlines and follow-up calls that credentialing requires.
@@ -1177,6 +1282,7 @@ MD,
             'title' => 'Patient Billing & Support',
             'icon' => 'chat',
             'artwork' => 'support',
+            'header_image' => 'images/photos/about-consultation.jpg',
             'excerpt' => 'Clear patient statements, friendly billing support and flexible payment options that improve collections without hurting relationships.',
             'body' => <<<'MD'
 As deductibles rise, more of your revenue comes directly from patients. We help you collect it with clear statements and helpful conversations.
@@ -1204,6 +1310,7 @@ MD,
             'title' => 'Medical Billing Audit',
             'icon' => 'search',
             'artwork' => 'security',
+            'header_image' => 'images/photos/home-choose.jpg',
             'excerpt' => 'An independent review of your coding, billing and collections that uncovers missed revenue and compliance risks.',
             'body' => <<<'MD'
 If you are not sure your billing is performing as well as it should, an audit gives you a clear answer. We review a sample of your claims, documentation and processes and report what we find.
@@ -1231,6 +1338,7 @@ MD,
             'title' => 'Practice Analytics & Reporting',
             'icon' => 'chart',
             'artwork' => 'analytics',
+            'header_image' => 'images/photos/team-meeting.jpg',
             'excerpt' => 'Monthly reports that turn billing data into clear decisions about payers, providers and growth.',
             'body' => <<<'MD'
 Good decisions need good numbers. We turn your billing data into reports you can actually use, built around the figures every practice owner should know.

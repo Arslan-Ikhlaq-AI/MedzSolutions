@@ -4,6 +4,7 @@ import ContactLinks, { phoneHref } from '../components/ContactLinks.jsx';
 import Icon from '../components/Icon.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 import SectionTitle from '../components/SectionTitle.jsx';
+import SocialLinks from '../components/SocialLinks.jsx';
 import { useSite } from '../context.js';
 import { Highlight, Rich } from '../text.jsx';
 
@@ -97,6 +98,13 @@ export default function Contact({ content, headerImage, sideImage }) {
                                     ))}
                                 </ol>
                             </div>
+                            {company.social?.length > 0 && (
+                                <div className="follow-card" data-animate="fade-up">
+                                    <h3>{content.follow_title}</h3>
+                                    <p>{content.follow_text}</p>
+                                    <SocialLinks withLabels />
+                                </div>
+                            )}
                         </aside>
                         <div className="contact-form-column">
                             <SectionTitle eyebrow={content.eyebrow} title={content.title} />

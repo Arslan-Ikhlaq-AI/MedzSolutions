@@ -1,4 +1,5 @@
 import ContactLinks from '../components/ContactLinks.jsx';
+import SocialLinks from '../components/SocialLinks.jsx';
 import { useSite } from '../context.js';
 import Logo from './Logo.jsx';
 
@@ -29,6 +30,7 @@ export default function Footer() {
                         <Logo href={routes.home} name={company.name} withTagline />
                         <p>{company.summary}</p>
                         <ContactLinks className="footer-contact" />
+                        <SocialLinks className="footer-social" />
                     </div>
                     <LinkColumn title="Quick Links" links={[
                         { label: 'About Us', url: routes.about },

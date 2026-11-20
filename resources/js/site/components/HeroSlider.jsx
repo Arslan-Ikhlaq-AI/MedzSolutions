@@ -24,7 +24,6 @@ export default function HeroSlider({ slides, actions }) {
     }, [activeIndex, isPaused, slides.length]);
 
     const show = (step) => setActiveIndex((index) => (index + step + slides.length) % slides.length);
-    const pad = (number) => String(number).padStart(2, '0');
 
     return (
         <section
@@ -68,9 +67,6 @@ export default function HeroSlider({ slides, actions }) {
                     </div>
                     {slides.length > 1 && (
                         <div className="hero-controls" data-animate="fade-up" style={{ '--delay': '.5s' }}>
-                            <span className="hero-counter" aria-hidden="true">
-                                <strong>{pad(activeIndex + 1)}</strong> / {pad(slides.length)}
-                            </span>
                             <div className="hero-progress">
                                 {slides.map((slide, index) => (
                                     <button

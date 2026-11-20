@@ -3,24 +3,39 @@ import ContactForm from '../components/ContactForm.jsx';
 import ContactLinks from '../components/ContactLinks.jsx';
 import Icon from '../components/Icon.jsx';
 import PageHeader from '../components/PageHeader.jsx';
+import SectionHeading from '../components/SectionHeading.jsx';
 import SectionTitle from '../components/SectionTitle.jsx';
 import { useSite } from '../context.js';
 import { Rich } from '../text.jsx';
 
-export default function Compliance({ content }) {
+export default function Compliance({ content, headerImage }) {
     const { routes } = useSite().shared;
 
     return (
         <>
-            <PageHeader title="Compliance" crumbs={[{ label: 'Resources', url: routes.resources }, { label: 'Compliance' }]} />
+            <PageHeader
+                title="Compliance"
+                image={headerImage}
+                imagePosition="center 60%"
+                compact
+                crumbs={[{ label: 'Resources', url: routes.resources }, { label: 'Compliance' }]}
+            />
+
             <section className="section">
                 <div className="container">
-                    <SectionTitle eyebrow={content.eyebrow} title={content.title} className="is-centered narrow" />
-                    <p className="lead-text section-lead" data-animate="fade-up"><Rich text={content.intro} /></p>
+                    <SectionHeading title={content.title} text={<Rich text={content.intro} />} />
+                    <ul className="compliance-highlights">
+                        {content.highlights.map((highlight, index) => (
+                            <li key={highlight.label} data-animate="fade-up" style={{ '--delay': `${index * 0.08}s` }}>
+                                <span className="compliance-highlight-icon"><Icon name={highlight.icon} /></span>
+                                {highlight.label}
+                            </li>
+                        ))}
+                    </ul>
                     <div className="card-grid three">
                         {content.sections.map((item, index) => (
-                            <article className="value-card compliance-card" key={item.title} data-animate="fade-up" style={{ '--delay': `${(index % 3) * 0.12}s` }}>
-                                <span className="value-icon"><Icon name={item.icon} /></span>
+                            <article className="compliance-card" key={item.title} data-animate="fade-up" style={{ '--delay': `${(index % 3) * 0.08}s` }}>
+                                <span className="service-icon"><Icon name={item.icon} /></span>
                                 <h3>{item.title}</h3>
                                 <p>{item.text}</p>
                                 <CheckList items={item.points} compact />
@@ -29,6 +44,7 @@ export default function Compliance({ content }) {
                     </div>
                 </div>
             </section>
+
             <section className="section surface">
                 <div className="container">
                     <div className="contact-layout">

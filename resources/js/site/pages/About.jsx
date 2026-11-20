@@ -2,7 +2,6 @@ import Button from '../components/Button.jsx';
 import CheckList from '../components/CheckList.jsx';
 import CtaBanner from '../components/CtaBanner.jsx';
 import Icon from '../components/Icon.jsx';
-import Media from '../components/Media.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 import SectionTitle from '../components/SectionTitle.jsx';
 import StatGrid from '../components/StatGrid.jsx';
@@ -10,24 +9,41 @@ import ValuesSection from '../components/ValuesSection.jsx';
 import { useSite } from '../context.js';
 import { Rich } from '../text.jsx';
 
-export default function About({ content, commitments }) {
+export default function About({ content, headerImage, photos, commitments }) {
     const { routes } = useSite().shared;
     const { intro, values, team_cta: teamCta } = content;
+    const claimCheck = commitments.items.find((item) => item.suffix === '%');
 
     return (
         <>
-            <PageHeader title="About Us" crumbs={[{ label: 'About Us' }]} />
+            <PageHeader title="About Us" text={content.header_text} image={headerImage} crumbs={[{ label: 'About Us' }]} />
 
             <section className="section">
                 <div className="container">
                     <div className="split-grid">
                         <div className="about-collage">
-                            <Media kind="claim" seed="about-billing" tone={0} ratio="4 / 4.4" reveal className="about-collage-main" />
-                            <Media kind="analytics" seed="about-reporting" tone={1} ratio="1 / 1" className="about-collage-secondary" />
+                            <span className="about-collage-frame" aria-hidden="true" />
+                            <span className="about-collage-dots" aria-hidden="true" />
+                            <figure className="about-photo about-photo-main" data-animate="reveal">
+                                <div className="media-inner">
+                                    <img src={photos.main} alt={intro.image_alt} loading="lazy" width="960" height="640" />
+                                </div>
+                            </figure>
+                            <figure className="about-photo about-photo-secondary" data-animate="reveal">
+                                <div className="media-inner">
+                                    <img src={photos.secondary} alt={intro.secondary_image_alt} loading="lazy" width="960" height="640" />
+                                </div>
+                            </figure>
                             <p className="about-badge" data-animate="fade-up" style={{ '--delay': '.3s' }}>
                                 <span className="about-badge-icon"><Icon name="shield" /></span>
                                 {intro.highlights[0]}
                             </p>
+                            {claimCheck && (
+                                <p className="about-stat" data-animate="fade-up" style={{ '--delay': '.45s' }}>
+                                    <strong>{claimCheck.value}{claimCheck.suffix}</strong>
+                                    <span>{claimCheck.label}</span>
+                                </p>
+                            )}
                         </div>
                         <div className="about-copy">
                             <SectionTitle eyebrow={intro.eyebrow} title={intro.title} />

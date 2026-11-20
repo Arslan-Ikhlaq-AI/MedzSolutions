@@ -1,0 +1,10 @@
+{
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__claude-in-chrome__tabs_context_mcp"
+    ]
+  }
+}

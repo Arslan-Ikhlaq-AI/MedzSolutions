@@ -17,7 +17,11 @@ class ServiceController extends Controller
             'description' => 'Revenue cycle management, medical billing, coding, eligibility, prior authorization, denial management, AR follow-up and credentialing services.',
             'props' => [
                 'content' => config('site.services_page'),
+                'headerImage' => asset(config('site.services_page.header_image')),
                 'services' => $this->content->services(),
+                'onboarding' => config('site.home.onboarding'),
+                'commitments' => config('site.home.commitments'),
+                'faqs' => collect(config('site.faqs'))->take(5)->values(),
             ],
         ]);
     }
@@ -33,7 +37,10 @@ class ServiceController extends Controller
             'props' => [
                 'service' => $service,
                 'content' => config('site.service_page'),
+                'headerImage' => asset($service['header_image'] ?? config('site.services_page.header_image')),
                 'values' => config('site.home.benefits'),
+                'onboarding' => config('site.home.onboarding'),
+                'commitments' => config('site.home.commitments'),
                 'services' => $this->content->services(),
             ],
         ]);

@@ -12,10 +12,11 @@
         <meta property="og:description" content="{{ $description }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:image" content="{{ asset('images/brand/og-image.jpg') }}">
-        <meta name="theme-color" content="#16457a">
+        <meta name="theme-color" content="#184678">
         <link rel="canonical" href="{{ url()->current() }}">
         <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('images/brand/favicon-64.png') }}">
         <link rel="apple-touch-icon" href="{{ asset('images/brand/apple-touch-icon.png') }}">
+        <script type="application/ld+json">{!! $organizationSchema !!}</script>
         {{-- Google Consent Mode v2: everything optional is denied until the visitor agrees. Runs before any tag. --}}
         <script>
             window.dataLayer = window.dataLayer || [];
