@@ -1389,7 +1389,7 @@ MD,
     ],
 
     'faqs' => [
-        ['question' => 'What does a medical billing company do?', 'answer' => 'We take care of the work needed to get your practice paid: verifying insurance, coding, submitting claims, posting payments, following up on unpaid claims and appealing denials. You stay in control and receive regular reports.'],
+        ['question' => 'What does a Medz Solution do?', 'answer' => 'We take care of the work needed to get your practice paid: verifying insurance, coding, submitting claims, posting payments, following up on unpaid claims and appealing denials. You stay in control and receive regular reports.'],
         ['question' => 'How much do your services cost?', 'answer' => 'Pricing depends on your specialty, claim volume and the services you need. Many practices choose a percentage of collections, so our success is tied to yours. We provide a clear quote after a free practice review.'],
         ['question' => 'How long does it take to get started?', 'answer' => 'A typical onboarding takes around 30 days from signed agreements, depending on your systems and the number of providers. We plan the transition so billing never stops.'],
         ['question' => 'Do we need to change our software?', 'answer' => 'No. We work inside your existing EHR, practice management system and clearinghouse.'],
